@@ -26,7 +26,7 @@ function Formularios () {
                     </div>
                     <div>
                         <label for="Descricao" className="form-label mt-4"><strong>Descrição</strong></label>
-                        <textarea className="form-control rounded-pill" id="exampleTextarea" name="Descricao" placeholder="Adicione uma descrição detalhada do produto" rows="3"></textarea>
+                        <textarea className="form-control rounded-pill" id="DescricaoProduto" name="Descricao" placeholder="Adicione uma descrição detalhada do produto" rows="3"></textarea>
                     </div>
                     <div>
                         <label for="IngredientesProduto" className="form-label mt-4">Ingredientes</label>
