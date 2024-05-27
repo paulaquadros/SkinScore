@@ -75,7 +75,7 @@ export default function VisualizarProduto () {
                 <hr />
                 <h5>{REVIEWCOUNT} Reviews</h5>
                 <div className="input-group">
-                    <div class="input-group-prepend">
+                    <div className="input-group-prepend">
                         <span className="input-group-text rounded-pill"><img src="img/DefaultUser.png" alt="" width="30px"/></span>
                     </div>
                     <input type="text" className="form-control rounded-pill" name="AdicionarReview" id="AdicionarReview" placeholder="Adicione seu review"/>
