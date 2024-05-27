@@ -1,0 +1,16 @@
+{
+  "name": "skinscore",
+  "version": "1.0.0",
+  "description": "Este é o arquivo README do projeto SkinScore. Aqui você encontrará informações sobre o projeto, como instalação, configuração e uso.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.11.5"
+  }
+}
