@@ -1,0 +1,23 @@
+.image-upload {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 10%;
+    width: 50%;
+}
+
+.image-upload>input {
+    visibility: hidden;
+}
+  
+.form-produto {
+    display:flex;
+    flex-direction: column;
+    justify-content: left;
+    width: 50%;
+    padding: 20px;
+}
+
+.botaoPublicar {
+    width: 50%;
+}

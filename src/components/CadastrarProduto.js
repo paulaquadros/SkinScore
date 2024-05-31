@@ -1,3 +1,5 @@
+import '../css/CadastrarProduto.css';
+
 function UploadImagem () {
     return (
         <div>
@@ -14,8 +16,9 @@ function UploadImagem () {
 function Formularios () {
     return (
         <div>
-            <form id="FormProduto" method="POST">
-                <fieldset>
+            <form className="splitScreen" id="FormProduto" method="POST">
+                <UploadImagem />
+                <fieldset className='form-produto'>
                     <div>
                         <label for="NomeProduto" className="form-label mt-4">Nome</label>
                         <input type="text" className="form-control rounded-pill" id="NomeProduto" placeholder="Adicione o nome do produto" />
@@ -42,13 +45,8 @@ function Formularios () {
 
 export default function CadastrarProduto () {
     return (
-        <div className="splitScreen">
-            <div>
-                <UploadImagem />
-            </div>
-            <div className="form-produto">
-                <Formularios />
-            </div>
+        <div>
+            <Formularios />
         </div>
-        )
+    )
 }
