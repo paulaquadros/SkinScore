@@ -113,7 +113,7 @@ function AdicionarReview (user){
                     <input type="radio" name="pele" id="mista" value="mista"/><label for="mista">Mista</label>
                 </div>
             </div>
-            <button type="submit" className="btn btn-primary" >Publicar</button>
+            <button type="submit" className="btn btn-primary rounded-pill" >Publicar</button>
         </form>
     )
 }

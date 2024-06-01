@@ -6,6 +6,10 @@
     width: 50%;
 }
 
+.imagem {
+    max-width: 500px;
+}
+
 .image-upload>input {
     visibility: hidden;
 }
