@@ -78,7 +78,7 @@ export default function CadastrarProduto () {
                         <label for="IngredientesProduto" className="form-label mt-4">Ingredientes</label>
                         <input required type="text" className="form-control rounded-pill" name="Ingredientes" id="IngredientesProduto" placeholder="Adicione os ingredientes do produto, para cada ingrediente use uma # antes" onChange={handleIngredientesChange}/>
                     </div>
-                    <button type="submit" className="btn btn-dark rounded-pill" value="Publicar" disabled={!nome || !marca || !descricao || !ingredientes}>Publicar</button>
+                    <button type="submit" className="btn btn-primary rounded-pill botao-publicar" value="Publicar" disabled={!nome || !marca || !descricao || !ingredientes}>Publicar</button>
                 </fieldset>
             </form>
         </div>

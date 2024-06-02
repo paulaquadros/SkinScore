@@ -113,7 +113,7 @@ function AdicionarReview (user){
                     <input type="radio" name="pele" id="mista" value="mista"/><label for="mista">Mista</label>
                 </div>
             </div>
-            <button type="submit" className="btn btn-primary rounded-pill" >Publicar</button>
+            <button type="submit" className="btn btn-primary rounded-pill botao-publicar" >Publicar</button>
         </form>
     )
 }
@@ -122,7 +122,7 @@ export default function VisualizarProduto () {
     return (
         <div className="splitScreen">
             <div className="leftPane">
-                <img src="img/Produto.png" alt="Imagem do produto" />
+                <img src={IMAGEM} alt="Imagem do produto" className='imagem-produto'/>
             </div>
             <div className="rightPane">
                 <Nome nome={NOME} marca={MARCA} />
@@ -139,6 +139,7 @@ export default function VisualizarProduto () {
 }
 
 const USER = {ProfilePicture: "img/DefaultUser.png"};
+const IMAGEM = "img/Produto.png";
 const NOME = "Perfume Black";
 const MARCA = "VitLojas";
 const SCORE = 3;
