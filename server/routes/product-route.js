@@ -9,6 +9,6 @@ const router = express.Router();
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-router.post('/', isAdmin, upload.single('foto'), productController.cadastrarProduto);
+router.post('/', isAdmin, upload.single('imagem'), productController.cadastrarProduto);
 
 module.exports = router;

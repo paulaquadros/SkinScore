@@ -36,7 +36,7 @@ export default function CadastrarProduto () {
         formData.append('ingredientes', ingredientes);
 
         try {
-            const response = await fetch('/', {
+            const response = await fetch('http://localhost:3001/produtos', {
               method: 'POST',
               body: formData
             });
