@@ -1,5 +1,6 @@
 import '../css/CadastrarProduto.css';
 import { useState } from 'react';
+import ChipInput from './ChipInput';
 
 export default function CadastrarProduto () {
     const [nome, setNome] = useState("");
@@ -24,7 +25,7 @@ export default function CadastrarProduto () {
     const handleNomeChange = (e)=>setNome(e.target.value);
     const handleMarcaChange = (e)=>setMarca(e.target.value);
     const handleDescricaoChange = (e)=>setDescricao(e.target.value);
-    const handleIngredientesChange = (e)=>setIngredientes(e.target.value);
+    const handleIngredientesChange = (e)=>setIngredientes(e);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -36,6 +37,7 @@ export default function CadastrarProduto () {
         formData.append('ingredientes', ingredientes);
 
         try {
+            //console.log(formData); <- verificar os dados que estão sendo enviados
             const response = await fetch('http://localhost:3001/produtos', {
               method: 'POST',
               body: formData
@@ -53,32 +55,29 @@ export default function CadastrarProduto () {
     return (
         <div>
             <form className="splitScreen" id="FormProduto" onSubmit={handleSubmit} method="GET">
-                <div>
-                    <form className="image-upload">
-                        <label for="input-imagem">
-                            <img className="imagem" src={imgData} alt="Escolha sua imagem"/>
-                        </label>
-                        <input type="file" name="Imagem" accept="image/*" id="input-imagem" onChange={handleChangePicture}/>
-                    </form>
+                <div className="image-upload leftPane">
+                    <label htmlFor="input-imagem">
+                        <img className="imagem" src={imgData} alt="Escolha sua imagem"/>
+                    </label>
+                    <input type="file" name="Imagem" accept="image/*" id="input-imagem" onChange={handleChangePicture}/>
                 </div>
-                <fieldset className='form-produto'>
+                <fieldset className='form-produto rightPane'>
                     <div>
-                        <label for="NomeProduto" className="form-label mt-4">Nome</label>
+                        <label htmlFor="NomeProduto" className="form-label mt-4">Nome</label>
                         <input required type="text" className="form-control rounded-pill" name="Nome" id="NomeProduto" placeholder="Adicione o nome do produto" onChange={handleNomeChange} />
                     </div>
                     <div>
-                        <label for="MarcaProduto" className="form-label mt-4">Marca</label>
+                        <label htmlFor="MarcaProduto" className="form-label mt-4">Marca</label>
                         <input required type="text" className="form-control rounded-pill" name="Marca" id="MarcaProduto" placeholder="Adicione a marca do produto" onChange={handleMarcaChange}/>
                     </div>
                     <div>
-                        <label for="Descricao" className="form-label mt-4"><strong>Descrição</strong></label>
+                        <label htmlFor="Descricao" className="form-label mt-4"><strong>Descrição</strong></label>
                         <textarea required className="form-control rounded-pill" name="Descricao" id="DescricaoProduto" placeholder="Adicione uma descrição detalhada do produto" rows="3" onChange={handleDescricaoChange} />
                     </div>
                     <div>
-                        <label for="IngredientesProduto" className="form-label mt-4">Ingredientes</label>
-                        <input required type="text" className="form-control rounded-pill" name="Ingredientes" id="IngredientesProduto" placeholder="Adicione os ingredientes do produto, para cada ingrediente use uma # antes" onChange={handleIngredientesChange}/>
+                        <ChipInput onDataFromChips={handleIngredientesChange}/>
                     </div>
-                    <button type="submit" className="btn btn-primary rounded-pill botao-publicar" value="Publicar" disabled={!nome || !marca || !descricao || !ingredientes}>Publicar</button>
+                    <button type="submit" className="btn btn-primary rounded-pill botao-publicar" value="Publicar" disabled={!nome || !marca || !descricao || !ingredientes} onClick={handleIngredientesChange}>Publicar</button>
                 </fieldset>
             </form>
         </div>

@@ -24,6 +24,11 @@
   padding: 1%;
 }
 
+.ProdutoIngredientes {
+  display:flex;
+  gap:10px;
+}
+
 .ProdutoNome {
   padding-left: 1%;
 }

@@ -19,7 +19,7 @@
     flex-direction: column;
     justify-content: left;
     width: 50%;
-    padding: 20px;
+    row-gap: 10px;
 }
 
 .botao-publicar {

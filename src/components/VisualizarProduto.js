@@ -12,8 +12,8 @@ function Nome ({nome, marca}) {
 }
 
 function ScoreAverage ({score, quantAvaliacoes}){
-    const cheias = [...Array(score)].map((e,i) => <img src="img/EstrelaCheia.png" alt="" width="30px"/>)
-    const vazias = [...Array(5-score)].map((e,i) => <img src="img/EstrelaVazia.png" alt="" width="30px"/>)
+    const cheias = [...Array(score)].map((e,i) => <img key={i} src="img/EstrelaCheia.png" alt="" width="30px"/>)
+    const vazias = [...Array(5-score)].map((e,i) => <img key={i} src="img/EstrelaVazia.png" alt="" width="30px"/>)
     return (
         <div className="ProdutoTitulo">
             {cheias}{vazias} {quantAvaliacoes} avaliações
@@ -23,9 +23,11 @@ function ScoreAverage ({score, quantAvaliacoes}){
 
 function Ingredientes ({ingredientes}){
     return (
-        <div className="ProdutoTitulo">
+        <div>
             <h4>Ingredientes</h4>
-            {ingredientes.map(ingrediente => <span className="badge rounded-pill bg-primary">{ingrediente} </span>)}
+            <div className="ProdutoTitulo ProdutoIngredientes">
+                {ingredientes.map(ingrediente => <span key={ingrediente} className="badge rounded-pill bg-primary">{ingrediente} </span>)}
+            </div>
         </div>
     )
 }
@@ -54,7 +56,7 @@ function ListaDeReviews ({reviews}){
     const linhas = [];
     reviews.forEach((review) => {
         linhas.push(
-            <Review review={review} key={review.nome}/>
+            <Review review={review} key={review.ID} />
         )
     });
     return (
@@ -66,7 +68,7 @@ function ListaDeReviews ({reviews}){
 }
 
 function AdicionarReview (user){
-    const [rating, setRating] = useState(null);
+    const [rating, setRating] = useState(0);
 
     function handleRatingChange(value){
         setRating(value);
@@ -101,16 +103,16 @@ function AdicionarReview (user){
             <div className="splitScreen">
                 <div className='form-check tem-alergia'>
                     <legend className='mt-4'>Possui alergia?</legend>
-                    <input type="radio" name="alergia" id="alergia-sim" value="sim"/><label for="alergia-sim">Sim</label><br />
-                    <input type="radio" name="alergia" id="alergia-nao" value="nao"/><label for="alergia-nao">Não</label>
+                    <input type="radio" name="alergia" id="alergia-sim" value="sim"/><label htmlFor="alergia-sim">Sim</label><br />
+                    <input type="radio" name="alergia" id="alergia-nao" value="nao"/><label htmlFor="alergia-nao">Não</label>
                     <input type="text" className="form-control rounded-pill" name="alergia-especifica" id="alergia-especifica" placeholder="Diga qual sua alergia" />
                 </div>
                 <div className='form-check tipo-pele'>
                     <legend className='mt-4'>Qual seu tipo de pele?</legend>
-                    <input type="radio" name="pele" id="normal" value="normal" /><label for="normal">Normal</label><br />
-                    <input type="radio" name="pele" id="seca" value="seca"/><label for="seca">Seca</label><br />
-                    <input type="radio" name="pele" id="oleosa" value="oleosa"/><label for="oleosa">Oleosa</label><br />
-                    <input type="radio" name="pele" id="mista" value="mista"/><label for="mista">Mista</label>
+                    <input type="radio" name="pele" id="normal" value="normal" /><label htmlFor="normal">Normal</label><br />
+                    <input type="radio" name="pele" id="seca" value="seca"/><label htmlFor="seca">Seca</label><br />
+                    <input type="radio" name="pele" id="oleosa" value="oleosa"/><label htmlFor="oleosa">Oleosa</label><br />
+                    <input type="radio" name="pele" id="mista" value="mista"/><label htmlFor="mista">Mista</label>
                 </div>
             </div>
             <button type="submit" className="btn btn-primary rounded-pill botao-publicar" >Publicar</button>
@@ -148,6 +150,6 @@ const INGREDIENTES = ["Óleo de Rosas", "Baunilha", "Sândalo", "Jasmim", "Âmba
 const DESCRICAO = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 const REVIEWCOUNT = 40;
 const REVIEWS = [
-    {ProfilePicture: "img/DefaultUser.png", Nome:"DMac", Review:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."},
-    {ProfilePicture: "img/DefaultUser.png", Nome:"Florzinha", Review:"❤❤❤"}
+    {ID: 1, ProfilePicture: "img/DefaultUser.png", Nome:"DMac", Review:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."},
+    {ID: 2, ProfilePicture: "img/DefaultUser.png", Nome:"Florzinha", Review:"❤❤❤"}
 ]
