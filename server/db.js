@@ -1,19 +1,14 @@
-const { Pool } = require('pg');
+const { Sequelize } = require('sequelize');
+const config = require('./config/db-config.json');
 
-const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'skinscore',
-  password: '1337',
-  port: 5432,
-});
+const sequelize = new Sequelize(config.development);
 
-pool.on('connect', () => {
+sequelize.authenticate()
+  .then(() => {
     console.log('Conexão com o banco de dados estabelecida.');
-  });
-  
-  pool.on('error', (err) => {
-    console.error('Erro no pool de conexões:', err);
+  })
+  .catch(err => {
+    console.error('Erro ao conectar com o banco de dados:', err);
   });
 
-module.exports = pool;
+module.exports = sequelize;

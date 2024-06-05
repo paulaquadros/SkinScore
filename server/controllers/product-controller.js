@@ -1,4 +1,6 @@
-const pool = require('../db');
+// controllers/product-controller.js
+
+const Produto = require('../models/Produto');
 
 exports.cadastrarProduto = async (req, res) => {
   const { nome, marca, descricao, ingredientes } = req.body;
@@ -9,11 +11,8 @@ exports.cadastrarProduto = async (req, res) => {
   }
 
   try {
-    const result = await pool.query(
-      'INSERT INTO produto (nome, ingredientes, descricao, marca, imagem) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [nome, ingredientes, descricao, marca, imagem]
-    );
-    res.status(201).json({ message: 'Produto cadastrado com sucesso!', produto: result.rows[0] });
+    const produto = await Produto.create({ nome, marca, descricao, ingredientes, imagem });
+    res.status(201).json({ message: 'Produto cadastrado com sucesso!', produto });
     console.log(`Produto Cadastrado com Sucesso.`);
   } catch (err) {
     console.error(err);
