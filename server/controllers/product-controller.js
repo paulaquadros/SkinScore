@@ -39,7 +39,7 @@ exports.listarUmProduto = async (req, res) => {
     res.status(200).json(produtos);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Erro ao listar produtos.' });
+    res.status(500).json({ message: 'Erro ao listar produto.' });
   }
 };
 
@@ -115,6 +115,8 @@ exports.buscarProdutos = async (req, res) => {
     const resultados = produtos.map(produto => ({
       nome: produto.nome,
       marca: produto.marca,
+      descricao: produto.descricao,
+      ingredientes: produto.ingredientes,
       reviews: produto.Reviews.map(review => ({
         nota_estrelas: review.nota_estrelas,
         comentario: review.comentario,
