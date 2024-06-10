@@ -1,9 +1,12 @@
 const express = require('express');
+const multer = require('multer');
 const reviewController = require('../controllers/review-controller');
 
 const router = express.Router();
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
-router.post('/', reviewController.cadastrarReview);
+router.post('/', upload.single(), reviewController.cadastrarReview);
 
 router.get('/', reviewController.listarReviews);
 

@@ -71,10 +71,19 @@ function ListaDeReviews ({reviews}){
 
 function AdicionarReview (user){
     const [rating, setRating] = useState(0);
+    const [comentario, setComentario] = useState();
+    const [alergia, setAlergia] = useState();
+    const [pele, setPele] = useState();
+    const [id_usuario, setId_usuario] = useState(1);
+    const { id } = useParams();
 
     function handleRatingChange(value){
         setRating(value);
     }
+
+    const handleComentarioChange = (e)=>setComentario(e.target.value);
+    const handleAlergiaChange = (e)=>setAlergia(e.target.value);
+    const handlePeleChange = (e)=>setPele(e.target.value);
 
     const popover = (
         <Popover id="popover">
@@ -94,27 +103,55 @@ function AdicionarReview (user){
         </OverlayTrigger>
     );
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('id_usuario', id_usuario);
+        formData.append('id_produto', id);
+        formData.append('nota_estrelas', rating);
+        formData.append('comentario', comentario);
+        formData.append('tipo_pele', pele);
+        formData.append('alergia', alergia);
+        
+        try {
+            console.log(formData); //<- verificar os dados que estão sendo enviados
+            const response = await fetch('http://localhost:3001/reviews', {
+              method: 'POST',
+              body: formData
+            });
+            if (response.ok) {
+              console.log('Form submitted successfully');
+            } else {
+                console.error('Form submission error');
+            }
+          } catch (error) {
+            console.error('Error:', error);
+          }
+    }
+
     return (
-        <form className="input-group avaliar-split" id="EnviarReview" method='POST'>
+        <form className="input-group avaliar-split" id="EnviarReview" method='POST' onSubmit={handleSubmit}>
             <div className="container-texto">
                 <span className="rounded-circle"><img src={USER.ProfilePicture} alt="" width="30px"/></span>
-                <textarea className="form-control rounded-pill" name="AdicionarReview" id="AdicionarReview" placeholder="Adicione seu review" rows={3}/>
+                <textarea className="form-control rounded-pill" name="comentario" id="comentario" placeholder="Adicione seu review" rows={3} onChange={handleComentarioChange}/>
                 <BotaoEstrelas />
-                <input type="hidden" name="rating" value={rating} />
+                <input type="hidden" name="nota_estrelas" value={rating} />
+                <input type="hidden" name="id_produto" value={id}/>
+                <input type="hidden" name="id_usuario" value={id_usuario}/>
             </div>
             <div className="splitScreen">
                 <div className='form-check tem-alergia'>
                     <legend className='mt-4'>Possui alergia?</legend>
-                    <input type="radio" name="alergia" id="alergia-sim" value="sim"/><label htmlFor="alergia-sim">Sim</label><br />
-                    <input type="radio" name="alergia" id="alergia-nao" value="nao"/><label htmlFor="alergia-nao">Não</label>
-                    <input type="text" className="form-control rounded-pill" name="alergia-especifica" id="alergia-especifica" placeholder="Diga qual sua alergia" />
+                    <input type="radio" name="alergia" id="alergia-sim" value="sim" onChange={handleAlergiaChange}/><label htmlFor="alergia-sim">Sim</label><br />
+                    <input type="radio" name="alergia" id="alergia-nao" value="nao" onChange={handleAlergiaChange}/><label htmlFor="alergia-nao">Não</label>
+                    <input type="text" className="form-control rounded-pill" name="alergia" id="alergia-especifica" placeholder="Diga qual sua alergia" onChange={handleAlergiaChange}/>
                 </div>
                 <div className='form-check tipo-pele'>
                     <legend className='mt-4'>Qual seu tipo de pele?</legend>
-                    <input type="radio" name="pele" id="normal" value="normal" /><label htmlFor="normal">Normal</label><br />
-                    <input type="radio" name="pele" id="seca" value="seca"/><label htmlFor="seca">Seca</label><br />
-                    <input type="radio" name="pele" id="oleosa" value="oleosa"/><label htmlFor="oleosa">Oleosa</label><br />
-                    <input type="radio" name="pele" id="mista" value="mista"/><label htmlFor="mista">Mista</label>
+                    <input type="radio" name="tipo_pele" id="normal" value="normal" onChange={handlePeleChange}/><label htmlFor="normal">Normal</label><br />
+                    <input type="radio" name="tipo_pele" id="seca" value="seca" onChange={handlePeleChange}/><label htmlFor="seca">Seca</label><br />
+                    <input type="radio" name="tipo_pele" id="oleosa" value="oleosa" onChange={handlePeleChange}/><label htmlFor="oleosa">Oleosa</label><br />
+                    <input type="radio" name="tipo_pele" id="mista" value="mista" onChange={handlePeleChange}/><label htmlFor="mista">Mista</label>
                 </div>
             </div>
             <button type="submit" className="btn btn-primary rounded-pill botao-publicar" >Publicar</button>

@@ -8,7 +8,7 @@ export default function CadastrarProduto () {
     const [descricao, setDescricao] = useState("");
     const [ingredientes, setIngredientes] = useState("");
     const [picture, setPicture] = useState(null);
-    const [imgData, setImgData] = useState("img/UploadImagem.png");
+    const [imgData, setImgData] = useState("/img/UploadImagem.png");
     
     const handleChangePicture = e => {
         if (e.target.files[0]) {
