@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../css/VisualizarProduto.css';
 import { Button, Popover, OverlayTrigger } from 'react-bootstrap';
 import Rating from 'react-rating';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 function Nome ({nome, marca}) {
     return (
@@ -12,8 +14,8 @@ function Nome ({nome, marca}) {
 }
 
 function ScoreAverage ({score, quantAvaliacoes}){
-    const cheias = [...Array(score)].map((e,i) => <img key={i} src="img/EstrelaCheia.png" alt="" width="30px"/>)
-    const vazias = [...Array(5-score)].map((e,i) => <img key={i} src="img/EstrelaVazia.png" alt="" width="30px"/>)
+    const cheias = [...Array(score)].map((e,i) => <img key={i} src="/img/EstrelaCheia.png" alt="" width="30px"/>)
+    const vazias = [...Array(5-score)].map((e,i) => <img key={i} src="/img/EstrelaVazia.png" alt="" width="30px"/>)
     return (
         <div className="ProdutoTitulo">
             {cheias}{vazias} {quantAvaliacoes} avaliações
@@ -26,7 +28,7 @@ function Ingredientes ({ingredientes}){
         <div>
             <h4>Ingredientes</h4>
             <div className="ProdutoTitulo ProdutoIngredientes">
-                {ingredientes.map(ingrediente => <span key={ingrediente} className="badge rounded-pill bg-primary">{ingrediente} </span>)}
+                {ingredientes?.split(",")?.map(ingrediente => <span key={ingrediente} className="badge rounded-pill bg-primary">{ingrediente} </span>)}
             </div>
         </div>
     )
@@ -78,8 +80,8 @@ function AdicionarReview (user){
         <Popover id="popover">
             <Popover.Body>
             <Rating
-                emptySymbol={<img src="img/EstrelaVazia.png" alt="" width="20px" className="icon" />}
-                fullSymbol={<img src="img/EstrelaCheia.png" alt="" width="20px" className="icon" />}
+                emptySymbol={<img src="/img/EstrelaVazia.png" alt="" width="20px" className="icon" />}
+                fullSymbol={<img src="/img/EstrelaCheia.png" alt="" width="20px" className="icon" />}
                 onChange={handleRatingChange}
             />
             </Popover.Body>
@@ -88,7 +90,7 @@ function AdicionarReview (user){
 
     const BotaoEstrelas = () => (
         <OverlayTrigger trigger="click" placement="top" overlay={popover}>
-            <Button variant="rounded-circle botao-estrelas"><img src="img/EstrelaVazia.png" alt="" width="30px"/></Button>
+            <Button variant="rounded-circle botao-estrelas"><img src="/img/EstrelaVazia.png" alt="" width="30px"/></Button>
         </OverlayTrigger>
     );
 
@@ -121,16 +123,34 @@ function AdicionarReview (user){
 }
 
 export default function VisualizarProduto () {
+    const {id} = useParams();
+    const [produto, setProduto] = useState();
+
+    const getData = async () => {
+        try{
+            await axios.get(`http://localhost:3001/produtos/${id}`).then(
+                (response) => setProduto(response.data)
+            );
+            
+        }catch(error){
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        getData();
+    },[]);
+
     return (
         <div className="splitScreen">
             <div className="leftPane">
                 <img src={IMAGEM} alt="Imagem do produto" className='imagem-produto'/>
             </div>
             <div className="rightPane">
-                <Nome nome={NOME} marca={MARCA} />
+                <Nome nome={produto?.nome} marca={produto?.marca} />
                 <ScoreAverage score={SCORE} quantAvaliacoes={AVALIACOES} />
-                <Ingredientes ingredientes={INGREDIENTES}/>
-                <Descricao descricao={DESCRICAO}/>
+                <Ingredientes ingredientes={produto?.ingredientes}/>
+                <Descricao descricao={produto?.descricao}/>
                 <ListaDeReviews reviews={REVIEWS}/>
                 <hr />
                 <h5>{REVIEWCOUNT} Reviews</h5>
@@ -140,16 +160,16 @@ export default function VisualizarProduto () {
     )
 }
 
-const USER = {ProfilePicture: "img/DefaultUser.png"};
-const IMAGEM = "img/Produto.png";
-const NOME = "Perfume Black";
-const MARCA = "VitLojas";
+const USER = {ProfilePicture: "/img/DefaultUser.png"};
+const IMAGEM = "/img/Produto.png";
+//const NOME = "Perfume Black";
+//const MARCA = "VitLojas";
 const SCORE = 3;
 const AVALIACOES = 22000;
-const INGREDIENTES = ["Óleo de Rosas", "Baunilha", "Sândalo", "Jasmim", "Âmbar", "Lavanda", "Almiscar"];
-const DESCRICAO = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+//const INGREDIENTES = "Óleo de Rosas, Baunilha, Sândalo, Jasmim, Âmbar, Lavanda, Almiscar";
+//const DESCRICAO = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 const REVIEWCOUNT = 40;
 const REVIEWS = [
-    {ID: 1, ProfilePicture: "img/DefaultUser.png", Nome:"DMac", Review:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."},
-    {ID: 2, ProfilePicture: "img/DefaultUser.png", Nome:"Florzinha", Review:"❤❤❤"}
+    {ID: 1, ProfilePicture: "/img/DefaultUser.png", Nome:"DMac", Review:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."},
+    {ID: 2, ProfilePicture: "/img/DefaultUser.png", Nome:"Florzinha", Review:"❤❤❤"}
 ]

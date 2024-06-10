@@ -28,7 +28,6 @@ function ChipInput({onDataFromChips}) {
     setText("");
     // clearing error message
     setValidationError("");
-    // sending data to parent
   }
 
 

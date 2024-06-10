@@ -5,11 +5,13 @@ const reviewRoutes = require('./routes/review-route');
 const userRoutes = require('./routes/user-route');
 const indexRoutes = require('./routes/index-route');
 const sequelize = require('./db');
+const cors = require('cors');
 
 const app = express();
 const PORT = 3001;
 
 app.use(express.json());
+app.use(cors())
 
 app.use('/', indexRoutes);
 app.use('/produtos', productRoutes);
