@@ -65,3 +65,18 @@ exports.deletarReview = async (req, res) => {
     res.status(500).json({ message: 'Erro ao deletar review.' });
   }
 };
+
+exports.listarReviewsPorProduto = async (req, res) => {
+  const { id_produto } = req.params;
+
+  try {
+    const reviews = await Review.findAll({ where: { id_produto } });
+    if (reviews.length === 0) {
+      return res.status(404).json({ message: 'Nenhuma review encontrada para este produto.' });
+    }
+    res.status(200).json(reviews);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Erro ao listar reviews para o produto.' });
+  }
+};

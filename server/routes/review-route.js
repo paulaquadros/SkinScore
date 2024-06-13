@@ -10,6 +10,8 @@ router.post('/', upload.single(), reviewController.cadastrarReview);
 
 router.get('/', reviewController.listarReviews);
 
+router.get('/produto/:id_produto', reviewController.listarReviewsPorProduto);
+
 router.put('/:id', reviewController.atualizarReview);
 
 router.delete('/:id', reviewController.deletarReview);
