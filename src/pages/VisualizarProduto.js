@@ -43,9 +43,9 @@ function Descricao ({ descricao }){
 }
 
 function Review ({review}){
-    const imagem = review.ProfilePicture;
-    const nome = review.Nome;
-    const texto = review.Review;
+    const imagem = "/img/DefaultUser.png" //review.ProfilePicture;
+    const nome = "asd" //review.Nome;
+    const texto = review.comentario;
 
     return (
         <div>
@@ -56,15 +56,19 @@ function Review ({review}){
 
 function ListaDeReviews ({reviews}){
     const linhas = [];
-    reviews.forEach((review) => {
-        linhas.push(
-            <Review review={review} key={review.ID} />
-        )
-    });
+    if(reviews){
+        reviews?.forEach((review) => {
+            linhas.push(
+                <Review review={review} key={review?.id_review} />
+            )
+        });
+    }
     return (
         <div className="ProdutoTitulo">
-            <h4>Review</h4>
+            <h4>Reviews</h4>
             {linhas}
+            <hr/>
+            <h5>{linhas.length} reviews</h5>
         </div>
     )
 }
@@ -114,7 +118,7 @@ function AdicionarReview (user){
         formData.append('alergia', alergia);
         
         try {
-            console.log(formData); //<- verificar os dados que estão sendo enviados
+            //console.log(formData); //<- verificar os dados que estão sendo enviados
             const response = await fetch('http://localhost:3001/reviews', {
               method: 'POST',
               body: formData
@@ -162,19 +166,35 @@ function AdicionarReview (user){
 export default function VisualizarProduto () {
     const {id} = useParams();
     const [produto, setProduto] = useState();
-
-    const getData = async () => {
-        try{
-            await axios.get(`http://localhost:3001/produtos/${id}`).then(
-                (response) => setProduto(response.data)
-            );
-            
-        }catch(error){
-            console.log(error);
-        }
-    }
+    const [reviews, setReviews] = useState();
 
     useEffect(() => {
+        const getReviews = async () => {
+            try{
+                const controller = new AbortController();
+                axios.get(`http://localhost:3001/reviews/produto/${id}`).catch(function (error) {
+                    if (error.response) {
+                      controller.abort();
+                    }}).then(
+                    (response) => setReviews(response?.data)
+                )
+            }catch(error){
+                console.error(error);
+            }
+        }
+    
+        const getData = async () => {
+            try{
+                await axios.get(`http://localhost:3001/produtos/${id}`).then(
+                    (response) => setProduto(response.data)//.then(console.log(response.data))
+                );
+                
+            }catch(error){
+                console.log(error);
+            }
+        }
+
+        getReviews();
         getData();
     },[]);
 
@@ -188,9 +208,7 @@ export default function VisualizarProduto () {
                 <ScoreAverage score={SCORE} quantAvaliacoes={AVALIACOES} />
                 <Ingredientes ingredientes={produto?.ingredientes}/>
                 <Descricao descricao={produto?.descricao}/>
-                <ListaDeReviews reviews={REVIEWS}/>
-                <hr />
-                <h5>{REVIEWCOUNT} Reviews</h5>
+                <ListaDeReviews reviews={reviews} />
                 <AdicionarReview />
             </div>
         </div>
@@ -203,10 +221,10 @@ const IMAGEM = "/img/Produto.png";
 //const MARCA = "VitLojas";
 const SCORE = 3;
 const AVALIACOES = 22000;
-//const INGREDIENTES = "Óleo de Rosas, Baunilha, Sândalo, Jasmim, Âmbar, Lavanda, Almiscar";
-//const DESCRICAO = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+/*const INGREDIENTES = "Óleo de Rosas, Baunilha, Sândalo, Jasmim, Âmbar, Lavanda, Almiscar";
+const DESCRICAO = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 const REVIEWCOUNT = 40;
 const REVIEWS = [
-    {ID: 1, ProfilePicture: "/img/DefaultUser.png", Nome:"DMac", Review:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."},
-    {ID: 2, ProfilePicture: "/img/DefaultUser.png", Nome:"Florzinha", Review:"❤❤❤"}
-]
+    {id_review: 1, ProfilePicture: "/img/DefaultUser.png", nome:"DMac", comentario:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."},
+    {id_review: 2, ProfilePicture: "/img/DefaultUser.png", nome:"Florzinha", comentario:"❤❤❤"}
+]*/
