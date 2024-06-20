@@ -4,7 +4,8 @@ import Home from './pages/Home';
 import CadastrarProduto from './pages/CadastrarProduto';
 import VisualizarProduto from './pages/VisualizarProduto';
 import VisualizarProdutos from './pages/VisualizarProdutos';
-import AppHeader from './pages/header';
+import Login from './pages/Login';
+import AppHeader from './pages/Header';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/cadastrar" Component={CadastrarProduto}/>
         <Route path="/produtos" Component={VisualizarProdutos}/>
         <Route path="/produtos/:id" Component={VisualizarProduto}/>
+        <Route path="/login" Component={Login}/>
       </Routes>
     </div>
   );

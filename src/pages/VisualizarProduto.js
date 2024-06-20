@@ -4,6 +4,7 @@ import { Button, Popover, OverlayTrigger } from 'react-bootstrap';
 import Rating from 'react-rating';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { Buffer } from "buffer";
 
 function Nome ({nome, marca}) {
     return (
@@ -44,7 +45,7 @@ function Descricao ({ descricao }){
 
 function Review ({review}){
     const imagem = "/img/DefaultUser.png" //review.ProfilePicture;
-    const nome = "asd" //review.Nome;
+    const nome = "Usuario1" //review.Nome;
     const texto = review.comentario;
 
     return (
@@ -167,6 +168,7 @@ export default function VisualizarProduto () {
     const {id} = useParams();
     const [produto, setProduto] = useState();
     const [reviews, setReviews] = useState();
+    const [imageData, setImageData] = useState();
 
     useEffect(() => {
         const getReviews = async () => {
@@ -186,7 +188,10 @@ export default function VisualizarProduto () {
         const getData = async () => {
             try{
                 await axios.get(`http://localhost:3001/produtos/${id}`).then(
-                    (response) => setProduto(response.data)//.then(console.log(response.data))
+                    (response) => {
+                        setProduto(response?.data);
+                        setImageData(response?.data.imagem.data);
+                    }
                 );
                 
             }catch(error){
@@ -201,7 +206,7 @@ export default function VisualizarProduto () {
     return (
         <div className="splitScreen">
             <div className="leftPane">
-                <img src={IMAGEM} alt="Imagem do produto" className='imagem-produto'/>
+                {imageData && <ImagemComponent base64String={Buffer.from(imageData).toString('base64')} />}
             </div>
             <div className="rightPane">
                 <Nome nome={produto?.nome} marca={produto?.marca} />
@@ -215,8 +220,16 @@ export default function VisualizarProduto () {
     )
 }
 
+const ImagemComponent = ({ base64String }) => {
+    return (
+        <div>
+            <img src={`data:image/jpeg;base64,${base64String}`} alt="Imagem" />
+        </div>
+    );
+};
+
 const USER = {ProfilePicture: "/img/DefaultUser.png"};
-const IMAGEM = "/img/Produto.png";
+//const IMAGEM = "/img/Produto.png";
 //const NOME = "Perfume Black";
 //const MARCA = "VitLojas";
 const SCORE = 3;
