@@ -1,6 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const productController = require('../controllers/product-controller');
+const authMiddleware = require('../middlewares/auth-middleware');
 const { isAdmin } = require('../middlewares/auth-middleware');
 
 const router = express.Router();
@@ -9,16 +10,16 @@ const router = express.Router();
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-router.post('/', isAdmin, upload.single('imagem'), productController.cadastrarProduto);
+router.post('/', authMiddleware, upload.single('imagem'), productController.cadastrarProduto);
 
-router.get('/', productController.listarProdutos);
+router.get('/', authMiddleware, productController.listarProdutos);
 
-router.get('/search', productController.buscarProdutos);
+router.get('/search', authMiddleware, productController.buscarProdutos);
 
-router.get('/:id', productController.listarUmProduto);
+router.get('/:id', authMiddleware, productController.listarUmProduto);
 
-router.put('/:id', isAdmin, upload.single('imagem'), productController.atualizarProduto);
+router.put('/:id', authMiddleware, upload.single('imagem'), productController.atualizarProduto);
 
-router.delete('/:id', isAdmin, productController.deletarProduto);
+router.delete('/:id', authMiddleware, productController.deletarProduto);
 
 module.exports = router;
