@@ -7,12 +7,16 @@ const indexRoutes = require('./routes/index-route');
 const authRoutes = require('./routes/auth-route');
 const sequelize = require('./db');
 const cors = require('cors');
+const setupSwagger = require('./swaggerConfig');
 
 const app = express();
 const PORT = 3001;
 
 app.use(express.json());
 app.use(cors())
+
+setupSwagger(app);
+console.log(`Documentação do SkinScore no Swagger: http://localhost:3001/api-docs`);
 
 app.use('/', indexRoutes);
 app.use('/produtos', productRoutes);
