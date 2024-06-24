@@ -6,6 +6,10 @@ export default function Home() {
             <Link to={'./cadastrar'}>Cadastrar Produto</Link>
             <br/>
             <Link to={'./produtos/'}>Visualizar Produtos</Link>
+            <br/>
+            <Link to={'./registrar'}>Registrar Usuário</Link>
+            <br/>
+            <Link to={'./login'}>Login</Link>
         </div>
     )
 }

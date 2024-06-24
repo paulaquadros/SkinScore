@@ -223,7 +223,7 @@ export default function VisualizarProduto () {
 const ImagemComponent = ({ base64String }) => {
     return (
         <div>
-            <img src={`data:image/jpeg;base64,${base64String}`} alt="Imagem" />
+            <img src={`data:image/jpeg;base64,${base64String}`} className='imagem' alt="Imagem" />
         </div>
     );
 };

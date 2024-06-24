@@ -20,6 +20,10 @@
   padding: 1%;
 }
 
+.imagem {
+  max-width: 500px;
+}
+
 .ProdutoTitulo {
   padding: 1%;
 }
