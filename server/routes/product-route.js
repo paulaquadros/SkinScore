@@ -12,11 +12,11 @@ const upload = multer({ storage });
 
 router.post('/', authMiddleware, upload.single('imagem'), productController.cadastrarProduto);
 
-router.get('/', productController.listarProdutos);
+router.get('/', authMiddleware, productController.listarProdutos);
 
-router.get('/search', productController.buscarProdutos);
+router.get('/search', authMiddleware, productController.buscarProdutos);
 
-router.get('/:id', productController.listarUmProduto);
+router.get('/:id', authMiddleware, productController.listarUmProduto);
 
 router.put('/:id', authMiddleware, upload.single('imagem'), productController.atualizarProduto);
 

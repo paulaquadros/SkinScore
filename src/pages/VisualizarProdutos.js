@@ -6,7 +6,7 @@ export default function VisualizarProdutos() {
     const [produtos, setProdutos] = useState([]);
     const getData = async () => {
         try{
-            await axios.get(`http://localhost:3001/produtos/`).then((response) => {
+            await axios.get(`http://localhost:3001/produtos/`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then((response) => {
                 setProdutos(response.data.map(produto => produto))
             });
         }catch(error){

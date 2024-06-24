@@ -16,7 +16,7 @@ export default function Login (){
           nome_usuario: nome_usuario,
           senha: senha,
         }).then(
-          (response)=>setToken(response.token)
+          (response)=>sessionStorage.setItem('token', response.data.token)
         ).catch(function (error) {
           if (error.response) {
             // The request was made and the server responded with a status code
