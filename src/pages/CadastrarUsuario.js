@@ -47,7 +47,7 @@ export default function CadastrarUsuario (){
     }
 
     return (
-        <form name="cadastrar_usuario" onSubmit={handleSubmit}>
+        <form id="cadastrar_usuario" name="cadastrar_usuario" onSubmit={handleSubmit}>
             <label htmlFor="nome" className="form-label mt-4">Nome</label>
             <input type="nome" className="form-control" id="nome" name="nome" placeholder="Nome completo" onChange={handleNomeChange}/>
             <label htmlFor="nome_usuario" className="form-label mt-4">Nome de Usuário</label>
