@@ -52,34 +52,41 @@ export default function CadastrarProduto () {
           }
     }
 
-    return (
-        <div>
-            <form className="splitScreen" id="FormProduto" onSubmit={handleSubmit} method="GET">
-                <div className="image-upload leftPane">
-                    <label htmlFor="input-imagem">
-                        <img className="imagem" src={imgData} alt="Escolha sua imagem"/>
-                    </label>
-                    <input type="file" name="Imagem" accept="image/*" id="input-imagem" onChange={handleChangePicture}/>
-                </div>
-                <fieldset className='form-produto rightPane'>
-                    <div>
-                        <label htmlFor="NomeProduto" className="form-label mt-4">Nome</label>
-                        <input required type="text" className="form-control rounded-pill" name="Nome" id="NomeProduto" placeholder="Adicione o nome do produto" onChange={handleNomeChange} />
+    if(sessionStorage.getItem('token')){
+        return (
+            <div>
+                <form className="splitScreen" id="FormProduto" onSubmit={handleSubmit} method="GET">
+                    <div className="image-upload leftPane">
+                        <label htmlFor="input-imagem">
+                            <img className="imagem" src={imgData} alt="Escolha sua imagem"/>
+                        </label>
+                        <input type="file" name="Imagem" accept="image/*" id="input-imagem" onChange={handleChangePicture}/>
                     </div>
-                    <div>
-                        <label htmlFor="MarcaProduto" className="form-label mt-4">Marca</label>
-                        <input required type="text" className="form-control rounded-pill" name="Marca" id="MarcaProduto" placeholder="Adicione a marca do produto" onChange={handleMarcaChange}/>
-                    </div>
-                    <div>
-                        <label htmlFor="Descricao" className="form-label mt-4"><strong>Descrição</strong></label>
-                        <textarea required className="form-control rounded-pill" name="Descricao" id="DescricaoProduto" placeholder="Adicione uma descrição detalhada do produto" rows="3" onChange={handleDescricaoChange} />
-                    </div>
-                    <div>
-                        <ChipInput onDataFromChips={handleIngredientesChange}/>
-                    </div>
-                    <button type="submit" className="btn btn-primary rounded-pill botao-publicar" value="Publicar" disabled={!nome || !marca || !descricao || !ingredientes} onClick={handleIngredientesChange}>Publicar</button>
-                </fieldset>
-            </form>
-        </div>
-    )
+                    <fieldset className='form-produto rightPane'>
+                        <div>
+                            <label htmlFor="NomeProduto" className="form-label mt-4">Nome</label>
+                            <input required type="text" className="form-control rounded-pill" name="Nome" id="NomeProduto" placeholder="Adicione o nome do produto" onChange={handleNomeChange} />
+                        </div>
+                        <div>
+                            <label htmlFor="MarcaProduto" className="form-label mt-4">Marca</label>
+                            <input required type="text" className="form-control rounded-pill" name="Marca" id="MarcaProduto" placeholder="Adicione a marca do produto" onChange={handleMarcaChange}/>
+                        </div>
+                        <div>
+                            <label htmlFor="Descricao" className="form-label mt-4"><strong>Descrição</strong></label>
+                            <textarea required className="form-control rounded-pill" name="Descricao" id="DescricaoProduto" placeholder="Adicione uma descrição detalhada do produto" rows="3" onChange={handleDescricaoChange} />
+                        </div>
+                        <div>
+                            <ChipInput onDataFromChips={handleIngredientesChange}/>
+                        </div>
+                        <button type="submit" className="btn btn-primary rounded-pill botao-publicar" value="Publicar" disabled={!nome || !marca || !descricao || !ingredientes} onClick={handleIngredientesChange}>Publicar</button>
+                    </fieldset>
+                </form>
+            </div>
+        )
+    }else{
+        return(
+            <h1>Usuário precisa estar logado!</h1>
+        )
+    }
+    
 }

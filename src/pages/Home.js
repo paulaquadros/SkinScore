@@ -5,7 +5,7 @@ export default function Home() {
         <div>
             <Link to={'./cadastrar'}>Cadastrar Produto</Link>
             <br/>
-            <Link to={'./produtos/'}>Visualizar Produtos</Link>
+            <Link to={'./produtos'}>Visualizar Produtos</Link>
             <br/>
             <Link to={'./registrar'}>Registrar Usuário</Link>
             <br/>

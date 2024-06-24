@@ -4,7 +4,6 @@ import { useState } from "react"
 export default function Login (){
     const [nome_usuario, setNome_usuario] = useState();
     const [senha, setSenha] = useState();
-    const [token, setToken] = useState();
 
     const handleUsuarioChange = (e) => setNome_usuario(e.target.value);
     const handleSenhaChange = (e) => setSenha(e.target.value);
