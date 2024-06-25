@@ -76,7 +76,7 @@
  *                 properties:
  *                   id:
  *                     type: integer
- *                   id_pro
+ *                   id_produto:
  *                     type: integer
  *                   nota:
  *                     type: integer

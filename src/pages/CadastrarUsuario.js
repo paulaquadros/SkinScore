@@ -17,7 +17,7 @@ export default function CadastrarUsuario (){
     const handleSubmit = async (e) =>{
       e.preventDefault();
       try{
-        axios.post('http://localhost:3001/auth/registrar',{
+        axios.post('http://127.0.0.1:3001/auth/registrar',{
           nome: nome,
           nome_usuario: nome_usuario,
           email: email,

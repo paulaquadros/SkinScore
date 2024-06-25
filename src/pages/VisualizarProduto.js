@@ -120,7 +120,7 @@ function AdicionarReview (user){
         
         try {
             //console.log(formData); //<- verificar os dados que estão sendo enviados
-            const response = await fetch('http://localhost:3001/reviews', {
+            const response = await fetch('http://127.0.0.1:3001/reviews', {
               method: 'POST',
               body: formData
             });
@@ -174,7 +174,7 @@ export default function VisualizarProduto () {
         const getReviews = async () => {
             try{
                 const controller = new AbortController();
-                axios.get(`http://localhost:3001/reviews/produto/${id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
+                axios.get(`http://127.0.0.1:3001/reviews/produto/${id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
                     if (error.response) {
                       controller.abort();
                     }}).then(
