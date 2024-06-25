@@ -2,11 +2,9 @@ FROM node:latest
 
 WORKDIR /api
 
-COPY package*.json ./
+COPY . .
 
 RUN npm install
-
-COPY . .
 
 CMD ["npm", "start"]
 
