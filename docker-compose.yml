@@ -12,12 +12,12 @@ services:
 
   frontend:
     build:
-      context: ./src
+      context: ./frontend
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
     volumes:
-      - ./src:/api
+      - ./frontend:/api
 
   backend:
     build:
