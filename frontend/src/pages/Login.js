@@ -11,7 +11,7 @@ export default function Login (){
     const handleSubmit = async (e) => {
       e.preventDefault();
       try{
-        axios.post('http://127.0.0.1:3001/auth/login',{
+        axios.post('http://3.145.180.184:3001/auth/login',{
           nome_usuario: nome_usuario,
           senha: senha,
         }).then(

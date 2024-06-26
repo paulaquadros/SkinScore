@@ -38,7 +38,7 @@ export default function CadastrarProduto () {
 
         try {
             //console.log(formData); <- verificar os dados que estão sendo enviados
-            const response = await fetch('http://127.0.0.1:3001/produtos', {
+            const response = await fetch('http://3.145.180.184:3001/produtos', {
               method: 'POST',
               body: formData
             });
