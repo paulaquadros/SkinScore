@@ -28,4 +28,7 @@ const ItemLista = sequelize.define('ItemLista', {
     timestamps: false
 });
 
+Produto.hasMany(ItemLista, { foreignKey: 'id_produto' });
+ItemLista.belongsTo(Produto, { foreignKey: 'id_produto' });
+
 module.exports = ItemLista;

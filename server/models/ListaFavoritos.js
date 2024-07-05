@@ -1,6 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../db');
 const Usuario = require('./Usuario');
+const ItemLista = require('./ItemLista');
 
 const ListaFavoritos = sequelize.define('ListaFavoritos', {
   id_lista_favoritos: {
@@ -27,5 +28,8 @@ const ListaFavoritos = sequelize.define('ListaFavoritos', {
     tableName: 'lista_favoritos',
     timestamps: false
 });
+
+ListaFavoritos.hasMany(ItemLista, { foreignKey: 'id_lista_favoritos' });
+ItemLista.belongsTo(ListaFavoritos, { foreignKey: 'id_lista_favoritos' });
 
 module.exports = ListaFavoritos;
