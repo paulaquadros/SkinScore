@@ -3,7 +3,7 @@
       "username": "postgres",
       "password": "1337",
       "database": "skinscore",
-      "host": "postgres",
+      "host": "localhost",
       "dialect": "postgres",
       "port": 5432
     }

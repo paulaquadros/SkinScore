@@ -1,0 +1,94 @@
+const ListaFavoritos = require('../models/ListaFavoritos');
+const ItemLista = require('../models/ItemLista');
+const Produto = require('../models/Produto');
+
+exports.criarListaFavoritos = async (req, res) => {
+  const { nome_lista, privado } = req.body;
+  const id_usuario = req.user.id_usuario; // Supondo que o middleware de autenticação adicione o ID do usuário ao req.user
+
+  try {
+    const novaLista = await ListaFavoritos.create({ id_usuario, nome_lista, privado });
+    res.status(201).json(novaLista);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Erro ao criar lista de favoritos.' });
+  }
+};
+
+exports.adicionarProdutoLista = async (req, res) => {
+  const { id_lista_favoritos, id_produto } = req.body;
+
+  try {
+    const novoItem = await ItemLista.create({ id_lista_favoritos, id_produto });
+    res.status(201).json(novoItem);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Erro ao adicionar produto à lista de favoritos.' });
+  }
+};
+
+exports.obterListasFavoritos = async (req, res) => {
+  const id_usuario = req.user.id_usuario;
+
+  try {
+    const listas = await ListaFavoritos.findAll({ where: { id_usuario } });
+    res.status(200).json(listas);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Erro ao obter listas de favoritos.' });
+  }
+};
+
+exports.obterListaFavoritos = async (req, res) => {
+  const { id_lista_favoritos } = req.params;
+  const id_usuario = req.user.id_usuario;
+
+  try {
+    const lista = await ListaFavoritos.findOne({ where: { id_lista_favoritos, id_usuario } });
+    if (!lista) {
+      return res.status(404).json({ message: 'Lista não encontrada.' });
+    }
+    const itens = await ItemLista.findAll({ where: { id_lista_favoritos: id_lista_favoritos }, include: Produto });
+    res.status(200).json({ lista, itens });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Erro ao obter a lista de favoritos.' });
+  }
+};
+
+exports.editarListaFavoritos = async (req, res) => {
+  const { id_lista_favoritos } = req.params;
+  const { nome_lista, privado } = req.body;
+  const UsuarioID = req.user.id_usuario;
+
+  try {
+    const lista = await ListaFavoritos.findOne({ where: { id_lista_favoritos, id_usuario } });
+    if (!lista) {
+      return res.status(404).json({ message: 'Lista não encontrada.' });
+    }
+    lista.nome_lista = nome_lista;
+    lista.privado = privado;
+    await lista.save();
+    res.status(200).json(lista);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Erro ao editar a lista de favoritos.' });
+  }
+};
+
+exports.excluirListaFavoritos = async (req, res) => {
+  const { id_lista_favoritos } = req.params;
+  const id_usuario = req.user.id_usuario;
+
+  try {
+    const lista = await ListaFavoritos.findOne({ where: { id_lista_favoritos, id_usuario } });
+    if (!lista) {
+      return res.status(404).json({ message: 'Lista não encontrada.' });
+    }
+    await lista.destroy();
+    res.status(200).json({ message: 'Lista excluída com sucesso.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Erro ao excluir a lista de favoritos.' });
+  }
+};

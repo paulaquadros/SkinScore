@@ -45,7 +45,7 @@ exports.login = async (req, res) => {
       return res.status(400).json({ message: 'Nome de usuário ou senha incorretos.' });
     }
 
-    const token = jwt.sign({ id: usuario.id, nome_usuario: usuario.nome_usuario }, secretKey, { expiresIn: '1h' });
+    const token = jwt.sign({ id_usuario: usuario.id_usuario, nome_usuario: usuario.nome_usuario }, secretKey, { expiresIn: '1h' });
 
     res.status(200).json({ message: 'Login bem-sucedido!', token });
   } catch (err) {

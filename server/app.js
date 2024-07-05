@@ -5,6 +5,7 @@ const productRoutes = require('./routes/product-route');
 const reviewRoutes = require('./routes/review-route');
 const indexRoutes = require('./routes/index-route');
 const authRoutes = require('./routes/auth-route');
+const listaFavoritosRoutes = require('./routes/lista-favoritos-route');
 const sequelize = require('./db');
 const cors = require('cors');
 const setupSwagger = require('./swaggerConfig');
@@ -23,6 +24,7 @@ app.use('/produtos', productRoutes);
 app.use('/reviews', reviewRoutes);
 app.use('/usuarios', userRoutes);
 app.use('/auth', authRoutes);
+app.use('/lista-favoritos', listaFavoritosRoutes);
 
 sequelize.sync().then(() => {
   app.listen(PORT, () => {
