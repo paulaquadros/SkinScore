@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react"
+import '../css/Login.css';
 
 export default function Login (){
     const [nome_usuario, setNome_usuario] = useState();
@@ -40,12 +41,16 @@ export default function Login (){
     }
 
     return (
+      <div className="panel">
         <form action="login" name="login" onSubmit={handleSubmit}>
             <label htmlFor="nome_usuario" className="form-label mt-4">Nome de Usuário</label>
-            <input type="text" className="form-control" id="nome_usuario" name="nome_usuario" onChange={handleUsuarioChange}/>
+            <input type="text" className="form-control rounded-pill" id="nome_usuario" name="nome_usuario" onChange={handleUsuarioChange}/>
             <label htmlFor="senha" className="form-label mt-4">Senha</label>
-            <input type="password" className="form-control" id="senha" name="senha" autoComplete="off" onChange={handleSenhaChange}/>
-            <button type="submit" className="btn btn-primary rounded-pill">Enviar</button>
+            <input type="password" className="form-control rounded-pill" id="senha" name="senha" autoComplete="off" onChange={handleSenhaChange}/>
+            <div className="div-botao-publicar">
+              <button type="submit" className="btn btn-primary rounded-pill botao-publicar">Enviar</button>
+            </div>
         </form>
+      </div>
     )
 }

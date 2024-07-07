@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import '../css/CadastrarUsuario.css';
 
 export default function CadastrarUsuario (){
     const [nome, setNome] = useState();
@@ -47,19 +48,30 @@ export default function CadastrarUsuario (){
     }
 
     return (
+      <div className="panel">
         <form id="cadastrar_usuario" name="cadastrar_usuario" onSubmit={handleSubmit}>
-            <label htmlFor="nome" className="form-label mt-4">Nome</label>
-            <input type="nome" className="form-control" id="nome" name="nome" placeholder="Nome completo" onChange={handleNomeChange}/>
+            <label htmlFor="nome" className="form-label mt-4">Nome Completo</label>
+            <input type="text" className="form-control rounded-pill" id="nome" name="nome" onChange={handleNomeChange}/>
             <label htmlFor="nome_usuario" className="form-label mt-4">Nome de Usuário</label>
-            <input type="nome_usuario" className="form-control" id="nome_usuario" name="nome_usuario" placeholder="Nome de usuário" onChange={handleUsuarioChange}/>
-            <label htmlFor="email" className="form-label mt-4">E-mail</label>
-            <input type="email" className="form-control" id="email" name="email" placeholder="E-mail" onChange={handleEmailChange}/>
+            <input type="text" className="form-control rounded-pill" id="nome_usuario" name="nome_usuario" onChange={handleUsuarioChange}/>
+            <label htmlFor="email" className="form-label mt-4">Email</label>
+            <input type="email" className="form-control rounded-pill" id="email" name="email" onChange={handleEmailChange}/>
             <label htmlFor="senha" className="form-label mt-4">Senha</label>
-            <input type="password" className="form-control" id="senha" name="senha" placeholder="Senha" autoComplete="off" onChange={handleSenhaChange}/>
-            <p>Tipo de Usuário</p>
-            <input type="radio" id="tipo_usuario_admin" name="tipo_usuario" value="A" onChange={handleTipoChange}/><label htmlFor="tipo_usuario_admin" >Admin</label><br />
-            <input type="radio" id="tipo_usuario_comum" name="tipo_usuario" value="C" onChange={handleTipoChange}/><label htmlFor="tipo_usuario_comum">Comum</label><br />
-            <button type="submit" className="btn btn-primary rounded-pill">Cadastrar</button>
+            <input type="password" className="form-control rounded-pill" id="senha" name="senha" autoComplete="off" onChange={handleSenhaChange}/>
+            <div className="flex-container">
+              <div className="flex-item">
+                <input type="radio" className="radio-btn" id="tipo_usuario_comum" name="tipo_usuario" value="C" onChange={handleTipoChange}/>
+                <label htmlFor="tipo_usuario_comum" className="label">Comum</label>
+              </div>
+              <div className="flex-item">
+                <input type="radio" className="radio-btn" id="tipo_usuario_admin" name="tipo_usuario" value="A" onChange={handleTipoChange}/>
+                <label htmlFor="tipo_usuario_admin" className="label" >Administrador</label>
+              </div>
+            </div>
+            <div className="div-botao-publicar">
+              <button type="submit" className="btn btn-primary rounded-pill botao-publicar">Cadastrar</button>
+            </div>
         </form>
+      </div>
     )
 }

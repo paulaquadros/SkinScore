@@ -26,3 +26,7 @@
     align-self: center;
     width: 30%;
 }
+
+input{
+    min-width: 70%;
+}
