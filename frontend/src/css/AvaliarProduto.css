@@ -1,0 +1,91 @@
+.splitScreen{
+    display:flex;
+    flex-direction: row;
+  }
+  
+  .leftPane{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1%;
+  }
+  
+  .rightPane{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1%;
+  }
+  
+  .imagem {
+    max-width: 500px;
+  }
+  
+  .ProdutoTitulo {
+    padding: 1%;
+  }
+  
+  .ProdutoIngredientes {
+    display:flex;
+    gap:10px;
+  }
+  
+  .ProdutoNome {
+    padding-left: 1%;
+  }
+  
+  .star {
+    cursor: pointer;
+    font-size:x-large;
+    margin: 5px;
+  }
+  
+  .avaliar-split {
+    display:flex;
+    flex-direction: column;
+  }
+  
+  .tem-alergia {
+    flex-basis: 50%;
+    display: block;
+    flex-direction: column;
+  }
+  
+  .tipo-pele {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .flex-item {
+    display: flex;
+    align-content: left;
+  }
+  
+  .container-texto {
+    display:flex;
+    flex-direction: row;
+  }
+  
+  input[type="radio"] {
+    margin-right: 0;
+  }
+  
+  .imagem-produto {
+    max-width: 400px;
+  }
+  
+  .botao-publicar {
+    align-self: center;
+    width: 30%;
+  }
+
+  .botoes {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }

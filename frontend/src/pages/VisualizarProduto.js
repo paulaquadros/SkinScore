@@ -5,6 +5,7 @@ import Rating from 'react-rating';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Buffer } from "buffer";
+import { Link } from 'react-router-dom';
 
 function Nome ({nome, marca}) {
     return (
@@ -187,7 +188,7 @@ export default function VisualizarProduto () {
     
         const getData = async () => {
             try{
-                await axios.get(`http://localhost:3001/produtos/${id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
+                await axios.get(`http://3.145.180.184:3001/produtos/${id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
                     (response) => {
                         setProduto(response?.data);
                         setImageData(response?.data.imagem.data);
@@ -214,7 +215,7 @@ export default function VisualizarProduto () {
                 <Ingredientes ingredientes={produto?.ingredientes}/>
                 <Descricao descricao={produto?.descricao}/>
                 <ListaDeReviews reviews={reviews} />
-                <AdicionarReview />
+                <button type="button" className="btn btn-primary rounded-pill botao-publicar"><Link to={`/avaliar/${id}`}>Avaliar Produto</Link></button>
             </div>
         </div>
     )

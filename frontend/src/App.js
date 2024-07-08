@@ -7,6 +7,9 @@ import VisualizarProdutos from './pages/VisualizarProdutos';
 import Login from './pages/Login';
 import CadastrarUsuario from './pages/CadastrarUsuario';
 import AppHeader from './pages/Header';
+import MinhasListas from './pages/MinhasListas';
+import VisualizarLista from './pages/VisualizarLista';
+import AvaliarProduto from './pages/AvaliarProduto';
 
 function App() {
   return (
@@ -19,6 +22,9 @@ function App() {
         <Route path="/produtos/:id" Component={VisualizarProduto}/>
         <Route path="/login" Component={Login}/>
         <Route path="/registrar" Component={CadastrarUsuario}/>
+        <Route path="/listas" Component={MinhasListas}/>
+        <Route path="/listas/:id" Component={VisualizarLista}/>
+        <Route path="/avaliar/:id" Component={AvaliarProduto}/>
       </Routes>
     </div>
   );

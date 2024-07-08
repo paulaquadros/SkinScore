@@ -1,0 +1,13 @@
+.navbar-nav {
+    display: flex;
+    flex-direction: row;
+    vertical-align: center;
+}
+
+.d-flex {
+    min-width: 70%;
+}
+
+.popover .popover-arrow::before, .popover .popover-arrow::after {
+    background-color: transparent;
+}
