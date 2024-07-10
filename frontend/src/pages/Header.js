@@ -8,7 +8,7 @@ export default function AppHeader (){
         <Popover id="popover">
             <Popover.Body>
                 <button type="button" className="btn btn-primary rounded-pill" >Ver Perfil</button>
-                <button type="button" className="btn btn-primary rounded-pill" ><Link to={'./listas'}>Minhas Listas</Link></button>
+                <button type="button" className="btn btn-primary rounded-pill" ><Link to={'./listas'} className="link-botao">Minhas Listas</Link></button>
                 <button type="button" className="btn btn-primary rounded-pill" >Log Out</button>
             </Popover.Body>
         </Popover>

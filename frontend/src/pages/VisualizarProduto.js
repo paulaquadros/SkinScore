@@ -215,7 +215,7 @@ export default function VisualizarProduto () {
                 <Ingredientes ingredientes={produto?.ingredientes}/>
                 <Descricao descricao={produto?.descricao}/>
                 <ListaDeReviews reviews={reviews} />
-                <button type="button" className="btn btn-primary rounded-pill botao-publicar"><Link to={`/avaliar/${id}`}>Avaliar Produto</Link></button>
+                <button type="button" className="btn btn-primary rounded-pill botao-publicar"><Link to={`/avaliar/${id}`} className="link-botao">Avaliar Produto</Link></button>
             </div>
         </div>
     )

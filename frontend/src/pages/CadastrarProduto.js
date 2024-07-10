@@ -40,7 +40,8 @@ export default function CadastrarProduto () {
             //console.log(formData); <- verificar os dados que estão sendo enviados
             const response = await fetch('http://3.145.180.184:3001/produtos', {
               method: 'POST',
-              body: formData
+              body: formData,
+              headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }
             });
             if (response.ok) {
               console.log('Form submitted successfully');

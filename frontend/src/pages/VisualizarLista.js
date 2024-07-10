@@ -40,7 +40,7 @@ function ListaDeProdutos(lista){
                         <ImagemComponent base64String={Buffer.from(produto.Produto.imagem).toString('base64')} />
                     </div>
                     <div className="rightPane">
-                        <h3 className="nome-marca">{produto?.Produto.nome}, {produto?.Produto.marca}</h3>
+                        <h3 className="nome-marca"><Link to={`/produtos/${produto?.Produto.id_produto}`}>{produto?.Produto.nome}, {produto?.Produto.marca}</Link></h3>
                         <p>{produto.Produto.descricao}</p>
                         <Ingredientes ingredientes={produto?.Produto.ingredientes}/>
                         <ScoreAverage score={SCORE} />
@@ -64,7 +64,7 @@ export default function VisualizarLista () {
         const getLista = async () => {
             try{
                 const controller = new AbortController();
-                axios.get(`http://localhost:3001/lista-favoritos/${id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
+                axios.get(`http://3.145.180.184:3001/lista-favoritos/${id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
                     if (error.response) {
                       controller.abort();
                     }}).then(

@@ -85,3 +85,8 @@ input[type="radio"] {
   align-self: center;
   width: 30%;
 }
+
+.link-botao {
+  color: white;
+  text-decoration: none;
+}

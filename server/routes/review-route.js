@@ -11,7 +11,7 @@ router.post('/', authMiddleware, upload.single(), reviewController.cadastrarRevi
 
 router.get('/', authMiddleware,  reviewController.listarReviews);
 
-router.get('/produto/:id_produto', authMiddleware, reviewController.listarReviewsPorProduto);
+router.get('/produto/:id_produto', reviewController.listarReviewsPorProduto);
 
 router.put('/:id', authMiddleware, reviewController.atualizarReview);
 

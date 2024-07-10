@@ -11,3 +11,8 @@
 .popover .popover-arrow::before, .popover .popover-arrow::after {
     background-color: transparent;
 }
+
+.link-botao {
+    color: white;
+    text-decoration: none;
+  }
