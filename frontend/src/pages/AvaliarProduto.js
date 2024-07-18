@@ -58,7 +58,7 @@ function AdicionarLista(props){
     const adicionarParaLista = async () => {
         try{
             const controller = new AbortController();
-            axios.post(`http://3.145.180.184:3001/lista-favoritos/adicionar`,{
+            axios.post(`http://localhost:3001/lista-favoritos/adicionar`,{
                 id_lista_favoritos: lista.id_lista_favoritos,
                 id_produto: id
             }, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
@@ -74,7 +74,7 @@ function AdicionarLista(props){
         const getListas = async () => {
             try{
                 const controller = new AbortController();
-                axios.get(`http://3.145.180.184:3001/lista-favoritos`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
+                axios.get(`http://localhost:3001/lista-favoritos`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
                     if (error.response) {
                       controller.abort();
                     }}).then(
@@ -145,7 +145,7 @@ function AdicionarReview (user){
     const handleSubmit = async (e) => {
         e.preventDefault();
         try{
-            axios.post('http://3.145.180.184:3001/reviews',{
+            axios.post('http://localhost:3001/reviews',{
                 id_usuario: id_usuario,
                 id_produto: id,
                 nota_estrelas: rating,
@@ -220,7 +220,7 @@ export default function AvaliarProduto () {
     useEffect(() => {
         const getData = async () => {
             try{
-                await axios.get(`http://3.145.180.184:3001/produtos/${id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
+                await axios.get(`http://localhost:3001/produtos/${id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
                     (response) => {
                         setProduto(response?.data);
                         setImageData(response?.data.imagem.data);

@@ -63,9 +63,8 @@ export default function VisualizarLista () {
     const handleDeletarLista = (e) => {
         e.preventDefault();
         try{
-            axios.delete(`http://3.145.180.184:3001/lista-favoritos/${id}`,{
-              id_lista_favoritos: id
-            }, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
+            axios.delete(`http://localhost:3001/lista-favoritos/${id}`, {
+              headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
               if (error.response) {
                 // The request was made and the server responded with a status code
                 // that falls out of the range of 2xx
@@ -92,7 +91,7 @@ export default function VisualizarLista () {
         const getLista = async () => {
             try{
                 const controller = new AbortController();
-                axios.get(`http://3.145.180.184:3001/lista-favoritos/${id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
+                axios.get(`http://localhost:3001/lista-favoritos/${id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
                     if (error.response) {
                       controller.abort();
                     }}).then(

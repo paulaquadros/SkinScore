@@ -21,14 +21,9 @@ exports.cadastrarProduto = async (req, res) => {
   }
 };
 
-exports.listarProdutos = async (req, res) => {
-  try {
-    const produtos = await Produto.findAll();
-    res.status(200).json(produtos);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Erro ao listar produtos.' });
-  }
+exports.listarProdutos = async (req, res, next) => {
+  req.resultado = Produto;
+  next();
 };
 
 exports.listarUmProduto = async (req, res) => {
@@ -85,7 +80,7 @@ exports.deletarProduto = async (req, res) => {
   }
 };
 
-exports.buscarProdutos = async (req, res) => {
+exports.buscarProdutos = async (req, res, next) => {
   const { termo } = req.query;
 
   if (!termo) {
@@ -93,39 +88,22 @@ exports.buscarProdutos = async (req, res) => {
   }
 
   try {
-    const produtos = await Produto.findAll({
+    req.resultado = Produto.findAll({
       where: {
         [Op.or]: [
           { nome: { [Op.iLike]: `%${termo}%` } },
           { marca: { [Op.iLike]: `%${termo}%` } },
           { descricao: { [Op.iLike]: `%${termo}%` } },
-          { ingredientes: { [Op.iLike]: `%${termo}%` } }
-        ]
+          { ingredientes: { [Op.iLike]: `%${termo}%` } },
+        ],
       },
       include: {
         model: Review,
-        attributes: ['nota_estrelas', 'comentario', 'tipo_pele', 'alergia']
-      }
+        attributes: ['nota_estrelas', 'comentario', 'tipo_pele', 'alergia'],
+      },
     });
 
-    if (produtos.length === 0) {
-      return res.status(404).json({ message: 'Nenhum produto encontrado.' });
-    }
-
-    const resultados = produtos.map(produto => ({
-      nome: produto.nome,
-      marca: produto.marca,
-      descricao: produto.descricao,
-      ingredientes: produto.ingredientes,
-      reviews: produto.Reviews.map(review => ({
-        nota_estrelas: review.nota_estrelas,
-        comentario: review.comentario,
-        tipo_pele: review.tipo_pele,
-        alergia: review.alergia
-      }))
-    }));
-
-    res.status(200).json(resultados);
+    next();
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Erro ao buscar produtos.' });

@@ -16,7 +16,7 @@ export default function Login (props){
     const handleSubmit = async (e) => {
       e.preventDefault();
       try{
-        axios.post('http://3.145.180.184:3001/auth/login',{
+        axios.post('http://localhost:3001/auth/login',{
           nome_usuario: nome_usuario,
           senha: senha,
         }).then(

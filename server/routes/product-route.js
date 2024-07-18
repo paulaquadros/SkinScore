@@ -3,6 +3,8 @@ const multer = require('multer');
 const productController = require('../controllers/product-controller');
 const authMiddleware = require('../middlewares/auth-middleware');
 const { isAdmin } = require('../middlewares/auth-middleware');
+const paginar = require('../middlewares/paginar');
+const Produto = require('../models/Produto');
 
 const router = express.Router();
 
@@ -12,9 +14,9 @@ const upload = multer({ storage });
 
 router.post('/', authMiddleware, upload.single('imagem'), productController.cadastrarProduto);
 
-router.get('/', productController.listarProdutos);
+router.get('/', productController.listarProdutos, paginar(Produto));
 
-router.get('/search', productController.buscarProdutos);
+router.get('/search', productController.buscarProdutos, paginar(Produto));
 
 router.get('/filter', productController.filtrarProdutos);
 

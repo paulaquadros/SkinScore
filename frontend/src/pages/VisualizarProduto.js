@@ -85,7 +85,7 @@ export default function VisualizarProduto () {
         const getReviews = async () => {
             try{
                 const controller = new AbortController();
-                axios.get(`http://3.145.180.184:3001/reviews/produto/${id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
+                axios.get(`http://localhost:3001/reviews/produto/${id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
                     if (error.response) {
                       controller.abort();
                     }}).then(
@@ -98,7 +98,7 @@ export default function VisualizarProduto () {
     
         const getData = async () => {
             try{
-                await axios.get(`http://3.145.180.184:3001/produtos/${id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
+                await axios.get(`http://localhost:3001/produtos/${id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
                     (response) => {
                         setProduto(response?.data);
                         setImageData(response?.data.imagem.data);
