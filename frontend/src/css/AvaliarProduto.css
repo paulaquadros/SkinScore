@@ -22,6 +22,7 @@
   
   .imagem {
     max-width: 500px;
+    border-radius: 25%;
   }
   
   .ProdutoTitulo {
@@ -87,5 +88,12 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
+  }
+
+  .panel {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: center;
   }

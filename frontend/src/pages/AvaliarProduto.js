@@ -30,7 +30,7 @@ function Lista ({lista}){
 
     return (
         <div className="container">
-            <input type="radio" name={nome} value={lista.id_lista_favoritos}/><label htmlFor={nome}>{nome}</label>
+            <input type="radio" name={nome} id={nome} className="flex-item" value={lista.id_lista_favoritos}/><label htmlFor={nome}>{nome}</label>
         </div>
     );
 }
@@ -102,14 +102,14 @@ function AdicionarLista(props){
           Salvar em qual lista?
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        <form onSubmit={handleSubmit}>
-            <ListaDeListas listas={lista}/>
-        </form>
-      </Modal.Body>
-      <Modal.Footer>
-        <button className="btn btn-primary rounded-pill botao-publicar" type="submit">🤍 Salvar</button>
-      </Modal.Footer>
+      <form onSubmit={handleSubmit}>
+        <Modal.Body>
+            <div className="panel"><ListaDeListas listas={lista}/></div>
+        </Modal.Body>
+        <Modal.Footer>
+            <button className="btn btn-primary rounded-pill botao-publicar" type="submit">🤍 Salvar</button>
+        </Modal.Footer>
+      </form>
     </Modal>
     )
 }

@@ -3,13 +3,24 @@ import { Popover, OverlayTrigger } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import '../css/Header.css';
 
+function BotaoLoginCadastrar () {
+    return (
+        <div>
+            <button type="button" className="botao btn btn-primary rounded-pill"><Link to={'./login'} className="link-botao">Login</Link></button>
+            <button type="button" className="botao btn btn-primary rounded-pill"><Link to={'./registrar'} className="link-botao">Cadastro</Link></button>
+        </div>
+    )
+}
+
 export default function AppHeader (){
+
     const popover = (
         <Popover id="popover">
             <Popover.Body>
-                <button type="button" className="btn btn-primary rounded-pill" >Ver Perfil</button>
-                <button type="button" className="btn btn-primary rounded-pill" ><Link to={'./listas'} className="link-botao">Minhas Listas</Link></button>
-                <button type="button" className="btn btn-primary rounded-pill" >Log Out</button>
+                <div className="botoes">
+                    <button type="button" className="btn btn-primary rounded-pill" ><Link to={'./listas'} className="link-botao">Ver Perfil</Link></button>
+                    <button type="button" className="btn btn-primary rounded-pill" >Log Out</button>
+                </div>
             </Popover.Body>
         </Popover>
     );
@@ -30,17 +41,19 @@ export default function AppHeader (){
                             <Link className="nav-link" to={'./'}>Página Inicial</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to={'./'} className="nav-link">Melhores</Link>
+                            <Link to={'./produtos'} className="nav-link">Melhores</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to={'./'} className="nav-link">Criar</Link>
+                            {sessionStorage.getItem("token") && <Link to={'./cadastrar'} className="nav-link">Criar</Link>}
                         </li>
+                        
                     </ul>
                     <form className="d-flex">
-                        <input className="form-control me-sm-2 rounded-pill" type="search" placeholder="Pesquisar" />
-                        <button className="btn btn-secondary my-2 my-sm-0" type="submit">Pesquisar</button>
+                        <input className="form-control me-sm-2 rounded-pill" type="search" placeholder="🍳 Pesquisar" />
+                        <button className="btn btn-primary rounded-pill my-2 my-sm-0" type="submit">Pesquisar</button>
                     </form>
-                    <BotaoUsuario />
+                    {sessionStorage.getItem('token') && <BotaoUsuario />}
+                    {!sessionStorage.getItem('token') && <BotaoLoginCadastrar />}
                 </div>
             </div>
         </nav>

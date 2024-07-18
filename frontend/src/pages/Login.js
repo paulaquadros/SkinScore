@@ -1,10 +1,14 @@
 import axios from "axios";
 import { useState } from "react"
+import {useNavigate} from 'react-router-dom';
 import '../css/Login.css';
 
-export default function Login (){
+export default function Login (props){
     const [nome_usuario, setNome_usuario] = useState();
     const [senha, setSenha] = useState();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const navigate = useNavigate();
 
     const handleUsuarioChange = (e) => setNome_usuario(e.target.value);
     const handleSenhaChange = (e) => setSenha(e.target.value);
@@ -34,7 +38,7 @@ export default function Login (){
             console.log('Error', error.message);
           }
           console.log(error.config);
-        })
+        }).then(navigate("/produtos"))
       }catch(error){
         console.log(error);
       }

@@ -26,3 +26,36 @@
     justify-content: left;
     padding: 10px;
 }
+
+.botao-deletar {
+    display: flex;
+    padding: 0;
+    width: 3em;
+}
+
+.imagem-deletar {
+    -webkit-filter: invert(1);
+    filter: invert(1);
+    width: 10px;
+    height: 10px;
+    overflow: hidden;
+  }
+
+  .imagem-deletar img {
+    height: 100%;
+  transform: translateX(-50%);
+  margin-left: 50%;
+  }
+
+.titulo-lista {
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .negrito {
+    color: black;
+    font-weight: bold;
+  }

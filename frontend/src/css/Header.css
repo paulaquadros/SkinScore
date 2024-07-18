@@ -5,14 +5,23 @@
 }
 
 .d-flex {
-    min-width: 70%;
+    min-width: 50%;
 }
 
 .popover .popover-arrow::before, .popover .popover-arrow::after {
     background-color: transparent;
 }
 
+.botao {
+    min-width: 30%;
+}
+
 .link-botao {
     color: white;
     text-decoration: none;
+  }
+
+  .botoes {
+    display: flex;
+    flex-direction: column;
   }

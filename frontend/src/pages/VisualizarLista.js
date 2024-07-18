@@ -60,6 +60,34 @@ export default function VisualizarLista () {
     const {id} = useParams();
     const [lista, setLista] = useState();
 
+    const handleDeletarLista = (e) => {
+        e.preventDefault();
+        try{
+            axios.delete(`http://3.145.180.184:3001/lista-favoritos/${id}`,{
+              id_lista_favoritos: id
+            }, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
+              if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+              } else if (error.request) {
+                // The request was made but no response was received
+                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                // http.ClientRequest in node.js
+                console.log(error.request);
+              } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error', error.message);
+              }
+              console.log(error.config);
+            })
+          }catch(error){
+            console.log(error);
+          }
+        }
+
     useEffect(() => {
         const getLista = async () => {
             try{
@@ -68,7 +96,7 @@ export default function VisualizarLista () {
                     if (error.response) {
                       controller.abort();
                     }}).then(
-                    (response) => setLista(response?.data?.itens)
+                    (response) => setLista(response?.data)
                 )
             }catch(error){
                 console.error(error);
@@ -76,9 +104,15 @@ export default function VisualizarLista () {
         }
         getLista();
     },[]);
+
     return (
-        <div>
-            <ListaDeProdutos lista={lista}/>
+        <div className="panel">
+            <div className="titulo-lista">
+                <h2>{lista?.lista.nome_lista}</h2>
+                <button type="button" className="botao-deletar p-1 btn btn-primary btn-sm rounded-circle" id="botao-deletar" onClick={handleDeletarLista}><img className="imagem-deletar" src="/img/close.png" alt=""/></button>
+                <div className="negrito">Delete a lista</div>
+            </div>
+            <ListaDeProdutos lista={lista?.itens}/>
         </div>
     )
 }

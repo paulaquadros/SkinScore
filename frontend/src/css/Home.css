@@ -1,0 +1,64 @@
+.splitScreen{
+    display:flex;
+    flex-direction: row;
+    gap: 0;
+    padding: 0;
+  }
+
+  .left{
+    max-width:60%;
+    display: flex;
+    justify-content: center;
+    padding:0;
+    background-color: #e1bcaa;
+  }
+  
+  .right{
+    min-width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    padding: 1%;
+    background-color: #e1bcaa;
+  }
+
+.imagem-home {
+    object-fit: fill;
+    max-width: 100%;
+}
+
+.link-botao {
+    color: white;
+    text-decoration: none;
+  }
+
+  .texto-1 {
+    margin-left:auto;
+    margin-right: auto;
+    width: 50%;
+    color: white;
+    font-size: 60px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.25;
+  }
+
+  .texto-2 {
+    margin-top: 5%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.25;
+  }
+
+  .botao-registrar {
+    margin-top: 5%;
+    margin-left: auto;
+    margin-right: auto;
+    width:30%;
+  }
