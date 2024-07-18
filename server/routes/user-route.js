@@ -7,6 +7,8 @@ router.post('/', userController.cadastrarUsuario);
 
 router.get('/', userController.listarUsuarios);
 
+router.get('/search', userController.buscarUsuario);
+
 router.get('/:id', userController.listarUmUsuario);
 
 router.put('/:id', userController.atualizarUsuario);

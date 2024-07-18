@@ -83,3 +83,24 @@ exports.deletarUsuario = async (req, res) => {
     res.status(500).json({ message: 'Erro ao deletar usuario.' });
   }
 };
+
+exports.buscarUsuario = async (req, res) => {
+  const { nome_usuario } = req.query;
+
+  if (!nome_usuario) {
+      return res.status(400).json({ message: 'Nome de usuário é obrigatório.' });
+  }
+
+  try {
+      const usuario = await Usuario.findOne({ where: { nome_usuario } });
+
+      if (!usuario) {
+          return res.status(404).json({ message: 'Usuário não encontrado.' });
+      }
+
+      res.status(200).json(usuario);
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Erro ao buscar usuário.' });
+  }
+};

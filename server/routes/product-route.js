@@ -14,7 +14,9 @@ router.post('/', authMiddleware, upload.single('imagem'), productController.cada
 
 router.get('/', productController.listarProdutos);
 
-router.get('/search', authMiddleware, productController.buscarProdutos);
+router.get('/search', productController.buscarProdutos);
+
+router.get('/filter', productController.filtrarProdutos);
 
 router.get('/:id', productController.listarUmProduto);
 

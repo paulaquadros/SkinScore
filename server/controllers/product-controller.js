@@ -1,4 +1,4 @@
-const { Op } = require('sequelize');
+const { Sequelize, Op } = require('sequelize');
 const Produto = require('../models/Produto');
 const Review = require('../models/Review');
 
@@ -129,5 +129,38 @@ exports.buscarProdutos = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Erro ao buscar produtos.' });
-  }
-};
+    }
+  };
+
+  exports.filtrarProdutos = async (req, res) => {
+    const { marca, descricao, ingredientes } = req.query;
+    
+    try {
+      let whereClause = {};
+      
+      if (marca) {
+        whereClause.marca = { [Op.iLike]: `%${marca}%` };
+      }
+
+      if (ingredientes) {
+        whereClause.ingredientes = { [Op.iLike]: `%${ingredientes}%` };
+      }
+      
+      if (descricao) {
+        whereClause.descricao = { [Op.iLike]: `%${descricao}%` };
+      }
+  
+      const produtosFiltrados = await Produto.findAll({
+        where: whereClause,
+        include: {
+          model: Review,
+          attributes: ['nota_estrelas', 'comentario', 'tipo_pele', 'alergia']
+        }
+      });
+  
+      res.status(200).json(produtosFiltrados);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Erro ao filtrar produtos.' });
+    }
+  };  
