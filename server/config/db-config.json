@@ -1,7 +1,7 @@
 {
     "development": {
       "username": "postgres",
-      "password": "Elfodoceu1908",
+      "password": "1337",
       "database": "skinscore",
       "host": "localhost",
       "dialect": "postgres",
