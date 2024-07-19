@@ -59,3 +59,14 @@
     color: black;
     font-weight: bold;
   }
+
+  .confirmar {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .botao-confirmar {
+    width: 50%;
+    margin-right:auto;
+  }

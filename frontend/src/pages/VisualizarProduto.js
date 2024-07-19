@@ -16,13 +16,24 @@ function Nome ({nome, marca}) {
 }
 
 function ScoreAverage ({score, quantAvaliacoes}){
-    const cheias = [...Array(score)].map((e,i) => <img key={i} src="/img/EstrelaCheia.png" alt="" width="30px"/>)
-    const vazias = [...Array(5-score)].map((e,i) => <img key={i} src="/img/EstrelaVazia.png" alt="" width="30px"/>)
-    return (
-        <div className="ProdutoTitulo">
-            {cheias}{vazias} {quantAvaliacoes} avaliações
-        </div>
-    )
+    if(score && score>-1){
+        score = Math.floor(score);
+        const cheias = [...Array(score)].map((e,i) => <img key={i} src="/img/EstrelaCheia.png" alt="" width="30px"/>)
+        const vazias = [...Array(5-score)].map((e,i) => <img key={i} src="/img/EstrelaVazia.png" alt="" width="30px"/>)
+        return (
+            <div className="avaliacoes">
+                {cheias}{vazias} {quantAvaliacoes} avaliações
+            </div>
+        )
+    }else{
+        const vazias = [...Array(5)].map((e,i) => <img key={i} className="estrelas-sem-avaliacoes" src="/img/EstrelaVazia.png" alt="" width="30px"/>)
+        return (
+            <div className="avaliacoes">
+                {vazias} Produto sem avaliações
+            </div>
+        )
+    }
+    
 }
 
 function Ingredientes ({ingredientes}){
@@ -46,8 +57,25 @@ function Descricao ({ descricao }){
 
 function Review ({review}){
     const imagem = "/img/DefaultUser.png" //review.ProfilePicture;
-    const nome = "Usuario1" //review.Nome;
+    const [nome, setNome] = useState("Usuario");
     const texto = review.comentario;
+
+    useEffect(() => {
+        const getData = async () => {
+            try{
+                await axios.get(`http://localhost:3001/usuarios/${review?.id_usuario}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
+                    (response) => {
+                        setNome(response?.data.nome);
+                    }
+                );
+                
+            }catch(error){
+                console.log(error);
+            }
+        }
+
+        getData();
+    },[]);
 
     return (
         <div>
@@ -57,6 +85,7 @@ function Review ({review}){
 }
 
 function ListaDeReviews ({reviews}){
+    console.log(reviews);
     const linhas = [];
     if(reviews){
         reviews?.forEach((review) => {
@@ -116,16 +145,16 @@ export default function VisualizarProduto () {
 
     return (
         <div className="splitScreen">
-            <div className="leftPane">
+            <div className="leftPanel">
                 {imageData && <ImagemComponent base64String={Buffer.from(imageData).toString('base64')} />}
             </div>
-            <div className="rightPane">
+            <div className="rightPanel">
                 <Nome nome={produto?.nome} marca={produto?.marca} />
-                <ScoreAverage score={SCORE} quantAvaliacoes={AVALIACOES} />
+                <ScoreAverage score={produto?.nota} quantAvaliacoes={reviews?.length} />
                 <Ingredientes ingredientes={produto?.ingredientes}/>
                 <Descricao descricao={produto?.descricao}/>
                 <ListaDeReviews reviews={reviews} />
-                <button type="button" className="btn btn-primary rounded-pill botao-publicar"><Link to={`/avaliar/${id}`} className="link-botao">Avaliar Produto</Link></button>
+                {sessionStorage.getItem('token') && <button type="button" className="btn btn-primary rounded-pill botao-publicar"><Link to={`/avaliar/${id}`} className="link-botao">Avaliar Produto</Link></button>}
             </div>
         </div>
     )
@@ -138,17 +167,3 @@ const ImagemComponent = ({ base64String }) => {
         </div>
     );
 };
-
-const USER = {ProfilePicture: "/img/DefaultUser.png"};
-//const IMAGEM = "/img/Produto.png";
-//const NOME = "Perfume Black";
-//const MARCA = "VitLojas";
-const SCORE = 3;
-const AVALIACOES = 22000;
-/*const INGREDIENTES = "Óleo de Rosas, Baunilha, Sândalo, Jasmim, Âmbar, Lavanda, Almiscar";
-const DESCRICAO = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-const REVIEWCOUNT = 40;
-const REVIEWS = [
-    {id_review: 1, ProfilePicture: "/img/DefaultUser.png", nome:"DMac", comentario:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."},
-    {id_review: 2, ProfilePicture: "/img/DefaultUser.png", nome:"Florzinha", comentario:"❤❤❤"}
-]*/

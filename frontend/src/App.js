@@ -10,6 +10,7 @@ import AppHeader from './pages/Header';
 import MinhasListas from './pages/MinhasListas';
 import VisualizarLista from './pages/VisualizarLista';
 import AvaliarProduto from './pages/AvaliarProduto';
+import BuscaResultados from './pages/BuscaResultados';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/listas" Component={MinhasListas}/>
         <Route path="/listas/:id" Component={VisualizarLista}/>
         <Route path="/avaliar/:id" Component={AvaliarProduto}/>
+        <Route path="/search" Component={BuscaResultados}/>
       </Routes>
     </div>
   );

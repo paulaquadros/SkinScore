@@ -3,15 +3,43 @@ import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
 import '../css/MinhasListas.css';
 import { Modal } from "react-bootstrap";
+import { Buffer } from "buffer";
 
+
+const ImagemComponent = ({ base64String }) => {
+  return (
+      <div>
+          <img src={`data:image/jpeg;base64,${base64String}`} className='imagem-produto' alt="Imagem" />
+      </div>
+  );
+};
 
 function Lista ({lista}){
-    const imagem = "/img/Produto.png";
     const imagem_editar = "/img/edit.png";
     const imagem_compartilhar = "/img/share.png";
     const nome = lista.nome_lista;
     const [privado, setPrivado] = useState(lista.privado)
     const [modalShow, setModalShow] = useState(false);
+
+    const [imageData, setImageData] = useState();
+
+    console.log(imageData)
+
+    useEffect(() => {
+        const getImagem = async () => {
+            try{
+                await axios.get(`http://localhost:3001/produtos/${lista?.primeiro_produto.id_produto}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
+                    (response) => {
+                        setImageData(response?.data.imagem.data);
+                    }
+                );
+                
+            }catch(error){
+                console.log(error);
+            }
+        }
+        getImagem();
+    },[]);
 
     const handlePrivadoChange = (e) => {
         e.preventDefault();
@@ -47,7 +75,8 @@ function Lista ({lista}){
 
     return (
         <div className="container">
-            <img src={imagem} alt=""/>
+           {imageData && <ImagemComponent base64String={Buffer.from(imageData).toString('base64')} />}
+           {!imageData && <img src="/img/Produto.png" alt=""/>}
             <button type="button" className="botao-acessar btn btn-primary rounded-pill"><Link to={`./${lista.id_lista_favoritos}`} className="link-botao">{nome}</Link></button>
             <button type="button" className="botao-editar btn btn-primary rounded-circle" onClick={() => setModalShow(true)}><img className="imagem-editar" src={imagem_editar} alt=""/></button>
             <EditarLista

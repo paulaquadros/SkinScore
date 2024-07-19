@@ -1,7 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Popover, OverlayTrigger } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import '../css/Header.css';
+import { useState } from "react";
+import axios from "axios";
 
 function BotaoLoginCadastrar () {
     return (
@@ -13,7 +15,10 @@ function BotaoLoginCadastrar () {
 }
 
 export default function AppHeader (){
+    const [busca, setBusca] = useState("");
 
+    const navigate = useNavigate();
+    
     const popover = (
         <Popover id="popover">
             <Popover.Body>
@@ -30,6 +35,13 @@ export default function AppHeader (){
             <Button variant="rounded-circle"><img src="/img/DefaultUser.png" alt="" width="30px"/></Button>
         </OverlayTrigger>
     );
+
+    const handleBuscaChange = (e) => setBusca(e.target.value)
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        navigate("./search", {state:{busca:busca}})
+    }
 
     return(
         <nav className="navbar navbar-expand-lg bg-light" data-bs-theme="light">
@@ -48,8 +60,8 @@ export default function AppHeader (){
                         </li>
                         
                     </ul>
-                    <form className="d-flex">
-                        <input className="form-control me-sm-2 rounded-pill" type="search" placeholder="🍳 Pesquisar" />
+                    <form className="d-flex" onSubmit={handleSubmit}>
+                        <input className="form-control me-sm-2 rounded-pill" type="search" placeholder="🍳 Pesquisar" value={busca} onChange={handleBuscaChange} />
                         <button className="btn btn-primary rounded-pill my-2 my-sm-0" type="submit">Pesquisar</button>
                     </form>
                     {sessionStorage.getItem('token') && <BotaoUsuario />}

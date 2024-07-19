@@ -25,27 +25,22 @@ function Ingredientes ({ingredientes}){
     )
 }
 
-function Lista ({lista}){
-    const nome = lista.nome_lista;
-
-    return (
-        <div className="container">
-            <input type="radio" name={nome} id={nome} className="flex-item" value={lista.id_lista_favoritos}/><label htmlFor={nome}>{nome}</label>
-        </div>
-    );
-}
-
-function ListaDeListas ({listas}){
+function ListaDeListas ({listas, id_lista, onChange}){
     const linhas = [];
+
+    
+
     if(listas){
         listas?.forEach((lista) => {
             linhas.push(
-                <Lista lista={lista} key={lista?.id_lista_favoritos} />
+                <div className="container-texto">
+                    <input type="radio" name="listas" id={lista.nome_lista} className="flex-item" value={lista.id_lista_favoritos} onChange={onChange}/><label className="label" htmlFor={lista.nome_lista}>{lista.nome_lista}</label>
+                </div>
             )
         });
     }
     return (
-        <div className="ListaNome">
+        <div className="container-container">
             {linhas}
         </div>
     )
@@ -54,17 +49,18 @@ function ListaDeListas ({listas}){
 function AdicionarLista(props){
     const [lista, setLista] = useState();
     const {id} = useParams();
+    const [id_lista, setId_lista] = useState();
     
     const adicionarParaLista = async () => {
         try{
             const controller = new AbortController();
             axios.post(`http://localhost:3001/lista-favoritos/adicionar`,{
-                id_lista_favoritos: lista.id_lista_favoritos,
+                id_lista_favoritos: id_lista,
                 id_produto: id
             }, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
                 if (error.response) {
                   controller.abort();
-                }})
+                }}).then(props.setModalShow(false))
         }catch(error){
             console.error(error);
         }
@@ -88,7 +84,9 @@ function AdicionarLista(props){
         getListas();
     },[]);
 
-    const handleSubmit = () => adicionarParaLista();
+    const handleSubmitLista = (e) => adicionarParaLista();
+
+    const handleChangeIdLista = (e) => setId_lista(e.target.value);
 
     return (
         <Modal
@@ -102,9 +100,9 @@ function AdicionarLista(props){
           Salvar em qual lista?
         </Modal.Title>
       </Modal.Header>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmitLista}>
         <Modal.Body>
-            <div className="panel"><ListaDeListas listas={lista}/></div>
+            <div className="panel"><ListaDeListas listas={lista} id_lista={id_lista} onChange={handleChangeIdLista}/></div>
         </Modal.Body>
         <Modal.Footer>
             <button className="btn btn-primary rounded-pill botao-publicar" type="submit">🤍 Salvar</button>
@@ -205,6 +203,7 @@ function AdicionarReview (user){
                 <button type="button" className="btn btn-primary rounded-pill botao-publicar" onClick={() => setModalShow(true)}>🤍 Salvar na sua lista</button>
                 <AdicionarLista
                     show={modalShow}
+                    setModalShow={setModalShow}
                     onHide={() => setModalShow(false)}
                 />
             </div>

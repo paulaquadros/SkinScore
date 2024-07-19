@@ -1,30 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import '../css/VisualizarProdutos.css';
+import { Link, useLocation } from "react-router-dom";
 import { Buffer } from "buffer";
-
-function ScoreAverage ({score, quantAvaliacoes}){
-    console.log("score: "+score+" quantAvaliacoes: "+quantAvaliacoes);
-    if(score && score>-1){
-        score = Math.floor(score);
-        const cheias = [...Array(score)].map((e,i) => <img key={i} src="/img/EstrelaCheia.png" alt="" width="30px"/>)
-        const vazias = [...Array(5-score)].map((e,i) => <img key={i} src="/img/EstrelaVazia.png" alt="" width="30px"/>)
-        return (
-            <div className="avaliacoes">
-                {cheias}{vazias}
-            </div>
-        )
-    }else{
-        const vazias = [...Array(5)].map((e,i) => <img key={i} className="estrelas-sem-avaliacoes" src="/img/EstrelaVazia.png" alt="" width="30px"/>)
-        return (
-            <div className="avaliacoes">
-                {vazias} Produto sem avaliações
-            </div>
-        )
-    }
-    
-}
 
 const ImagemComponent = ({ base64String }) => {
     return (
@@ -57,7 +34,6 @@ function Produto ({produto}){
         <div className="container">
             <div className="flex-item"><Link to={`./${produto.id_produto}`} className="link-produto">{imageData && <ImagemComponent base64String={Buffer.from(imageData).toString('base64')} />}</Link></div>
             <div className="flex-item nome-produto"><Link to={`./${produto.id_produto}`} className="link-produto">{produto.nome}</Link></div>
-            <div className="flex-item estrelas-produto"><ScoreAverage score={produto.nota}/></div>
         </div>
     );
 }
@@ -66,7 +42,6 @@ function ListaDeProdutos ({produtos}){
     const linhas = [];
     if(produtos){
         produtos?.forEach((produto) => {
-            console.log(produto)
             linhas.push(
                 <Produto produto={produto} key={produto?.id_produto} />
             )
@@ -79,33 +54,43 @@ function ListaDeProdutos ({produtos}){
     )
 }
 
-
-
-export default function VisualizarProdutos() {
+export default function BuscaResultados() {
+    const location = useLocation();
+    const busca = location.state.busca;
     const [produtos, setProdutos] = useState([]);
-    
+    const [usuario, setUsuario] = useState();
+
     useEffect(() => {
         const getProdutos = async () => {
             try{
-                const controller = new AbortController();
-                axios.get(`http://localhost:3001/produtos`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
-                    if (error.response) {
-                      controller.abort();
-                    }}).then(
-                    (response) => setProdutos(response?.data)
-                )
+                await axios.get(`http://localhost:3001/produtos/search`, {params: {termo: busca}}, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }})
+                .then((response) => {setProdutos(response.data); console.log(response.data);})
             }catch(error){
-                console.error(error);
+                console.log(error);
             }
         }
+    
+        const getUsuario = async () => {
+                try{
+                    await axios.get(`http://localhost:3001/usuarios/search`, {params: {nome_usuario: busca}}, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }})
+                    .then((response) => setUsuario(response.data))
+                }catch(error){
+                    console.log(error);
+                }
+        }
         getProdutos();
-    },[]);
+        getUsuario();
+    },[])
+    
 
-    return(
-        <div className="panel">
+    return (
+        <div>
+            <h1>Resultados da Pesquisa</h1>
+            <h3>Usuários:</h3>
+            <Link to={`/usuarios/${usuario?.id_usuario}`}><img src="/img/DefaultUser.png" alt="" width="30px"/> {usuario?.nome}</Link>
+            <hr/>
+            <h3>Produtos:</h3>
             <ListaDeProdutos produtos={produtos}/>
         </div>
     )
 }
-
-const SCORE = 3;
