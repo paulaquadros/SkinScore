@@ -1,6 +1,7 @@
 const { Sequelize, Op } = require('sequelize');
 const Produto = require('../models/Produto');
 const Review = require('../models/Review');
+const axios = require('axios');
 
 exports.cadastrarProduto = async (req, res) => {
   const { nome, marca, descricao, ingredientes } = req.body;
@@ -30,8 +31,24 @@ exports.listarUmProduto = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const produtos = await Produto.findByPk(id);
-    res.status(200).json(produtos);
+    const produto = await Produto.findByPk(id);
+
+    if (!produto) {
+      return res.status(404).json({ message: 'Produto não encontrado.' });
+    }
+
+    try {
+      const response = await axios.get(`http://localhost:3001/reviews/produto/${id}`); // Não façam isso no seu trabalho
+      const reviews = response.data;
+
+      const totalNotas = reviews.reduce((acc, review) => acc + review.nota_estrelas, 0);
+      const notaMedia = reviews.length > 0 ? totalNotas / reviews.length : -1;
+      produto.dataValues.nota = notaMedia;
+    } catch (error) {
+      produto.dataValues.nota = -1;
+    }
+
+    res.status(200).json(produto);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Erro ao listar produto.' });

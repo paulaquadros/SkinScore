@@ -33,7 +33,19 @@ exports.obterListasFavoritos = async (req, res) => {
 
   try {
     const listas = await ListaFavoritos.findAll({ where: { id_usuario } });
-    res.status(200).json(listas);
+
+    const listasComPrimeiroProduto = await Promise.all(
+      listas.map(async (lista) => {
+        const itens = await ItemLista.findAll({ where: { id_lista_favoritos: lista.id_lista_favoritos }, include: Produto });
+        let primeiro_produto = null;
+        if (itens.length > 0) {
+          primeiro_produto = itens[0].Produto;
+        }
+        return { ...lista.toJSON(), primeiro_produto };
+      })
+    );
+
+    res.status(200).json(listasComPrimeiroProduto);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Erro ao obter listas de favoritos.' });
