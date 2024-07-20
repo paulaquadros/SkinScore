@@ -1,7 +1,8 @@
 const Review = require('../models/Review');
 
 exports.cadastrarReview = async (req, res) => {
-  const { id_usuario, id_produto, nota_estrelas, comentario, tipo_pele, alergia } = req.body;
+  const id_usuario = req.user.id_usuario;
+  const { id_produto, nota_estrelas, comentario, tipo_pele, alergia } = req.body;
 
   if (!id_usuario || !id_produto || !nota_estrelas || !comentario) {
     return res.status(400).json({ message: 'Todos os campos obrigatórios devem ser preenchidos.' });
@@ -17,8 +18,9 @@ exports.cadastrarReview = async (req, res) => {
 };
 
 exports.listarReviews = async (req, res) => {
+  const id_usuario = req.user.id_usuario;
   try {
-    const reviews = await Review.findAll();
+    const reviews = await Review.findAll({ where: { id_usuario } });
     res.status(200).json(reviews);
   } catch (err) {
     console.error(err);
