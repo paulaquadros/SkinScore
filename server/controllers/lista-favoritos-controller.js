@@ -29,7 +29,8 @@ exports.adicionarProdutoLista = async (req, res) => {
 };
 
 exports.removerProdutoLista = async (req, res) => {
-  const { id_lista_favoritos, id_produto } = req.body;
+  const { id_lista_favoritos } = req.params;
+  const { id_produto } = req.body;
 
   try {
     const item = await ItemLista.findOne({ where: { id_lista_favoritos, id_produto } });
