@@ -23,8 +23,6 @@ function Lista ({lista}){
 
     const [imageData, setImageData] = useState();
 
-    console.log(imageData)
-
     useEffect(() => {
         const getImagem = async () => {
             try{
@@ -259,7 +257,8 @@ export default function MinhasListas () {
                 show={modalShow}
                 onHide={() => window.location.reload().then(setModalShow(false))}
             />
-            <ListaDeListas listas={lista}/>
+            {(lista || lista?.lenght>0) && <ListaDeListas listas={lista}/>}
+            {(!lista || lista?.length<1) && <div className="texto">Você ainda não criou nenhuma lista</div>}
         </div>
     )
 }

@@ -79,7 +79,7 @@ function ListaDeProdutos ({produtos}){
 
 export default function BuscaResultados() {
     const location = useLocation();
-    const busca = location.state.busca;
+    const [busca, setBusca] = useState(location.state.busca)
     const [produtos, setProdutos] = useState([]);
     const [usuario, setUsuario] = useState();
     const [produtosFiltrado, setProdutosFiltrado] = useState();
@@ -110,6 +110,7 @@ export default function BuscaResultados() {
     }
 
     useEffect(() => {
+        setBusca(location.state.busca);
         const getProdutos = async () => {
             try{
                 await axios.get(`http://localhost:3001/produtos/search`, {params: {termo: busca}}, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }})
@@ -129,7 +130,7 @@ export default function BuscaResultados() {
         }
         getProdutos();
         getUsuario();
-    },[])
+    },[location])
     
 
     return (
@@ -137,7 +138,7 @@ export default function BuscaResultados() {
             <h1>Resultados da Pesquisa</h1>
             
             <h3>Usuários:</h3>
-            {usuario && <Link to={`/usuarios/${usuario?.id_usuario}`}><img src="/img/DefaultUser.png" alt="" width="30px"/> {usuario?.nome}</Link>}
+            {usuario && <Link to={`/usuario/${usuario?.id_usuario}`}><img src="/img/DefaultUser.png" alt="" width="30px"/> {usuario?.nome}</Link>}
             {!usuario && <div className="texto">Nenhum usuário encontrado</div>}
             <hr/>
             <h3>Produtos:</h3>

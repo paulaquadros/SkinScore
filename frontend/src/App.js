@@ -11,6 +11,7 @@ import MinhasListas from './pages/MinhasListas';
 import VisualizarLista from './pages/VisualizarLista';
 import AvaliarProduto from './pages/AvaliarProduto';
 import BuscaResultados from './pages/BuscaResultados';
+import Usuario from './pages/Usuario';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/listas/:id" Component={VisualizarLista}/>
         <Route path="/avaliar/:id" Component={AvaliarProduto}/>
         <Route path="/search" Component={BuscaResultados}/>
+        <Route path="/usuario/:id" Component={Usuario}/>
       </Routes>
     </div>
   );

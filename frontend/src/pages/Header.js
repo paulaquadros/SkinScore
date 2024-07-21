@@ -18,13 +18,18 @@ export default function AppHeader (){
     const [busca, setBusca] = useState("");
 
     const navigate = useNavigate();
+
+    const handleLogout = (e) => {
+        e.preventDefault();
+        sessionStorage.removeItem("token");
+    }
     
     const popover = (
         <Popover id="popover">
             <Popover.Body>
                 <div className="botoes">
                     <button type="button" className="btn btn-primary rounded-pill" ><Link to={'./listas'} className="link-botao">Ver Perfil</Link></button>
-                    <button type="button" className="btn btn-primary rounded-pill" >Log Out</button>
+                    <button type="button" className="btn btn-primary rounded-pill" onClick={handleLogout}>Log Out</button>
                 </div>
             </Popover.Body>
         </Popover>
@@ -40,7 +45,8 @@ export default function AppHeader (){
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        navigate("./search", {state:{busca:busca}})
+        if(window.location.pathname === "/search") navigate(window.location.pathname, {state:{busca:busca}})
+        else navigate("./search", {state:{busca:busca}})
     }
 
     return(

@@ -79,7 +79,7 @@ export default function CadastrarProduto () {
                         <div>
                             <ChipInput onDataFromChips={handleIngredientesChange}/>
                         </div>
-                        <button type="submit" className="btn btn-primary rounded-pill botao-publicar" value="Publicar" disabled={!nome || !marca || !descricao || !ingredientes} onClick={handleIngredientesChange}>Publicar</button>
+                        <button type="submit" className="btn btn-primary rounded-pill botao-publicar" value="Publicar" disabled={imgData==="/img/UploadImagem.png" || !nome || !marca || !descricao || !ingredientes} onClick={handleIngredientesChange}>Publicar</button>
                     </fieldset>
                 </form>
             </div>

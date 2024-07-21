@@ -68,7 +68,7 @@ function ListaDeProdutos(lista){
             <div>
                 <li key={produto.Produto.id_produto} className="splitScreen">
                     <div className="leftPane">
-                        <ImagemComponent base64String={Buffer.from(produto.Produto.imagem).toString('base64')} />
+                        {produto.Produto.imagem && <ImagemComponent base64String={Buffer.from(produto.Produto.imagem).toString('base64')} />}
                         <button type="button" className="botao-deletar p-1 btn btn-primary btn-sm rounded-circle" id="botao-deletar" onClick={(e) => handleRemoverProduto(e, produto?.Produto.id_produto)}><img className="imagem-deletar" src="/img/close.png" alt=""/></button>
                     </div>
                     <div className="rightPane">
@@ -188,5 +188,3 @@ export default function VisualizarLista () {
         </div>
     )
 }
-
-const SCORE = 3;
