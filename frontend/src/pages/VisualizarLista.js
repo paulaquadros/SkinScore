@@ -6,13 +6,24 @@ import '../css/VisualizarLista.css';
 import { Modal } from "react-bootstrap";
 
 function ScoreAverage ({score, quantAvaliacoes}){
-    const cheias = [...Array(score)].map((e,i) => <img key={i} src="/img/EstrelaCheia.png" alt="" width="30px"/>)
-    const vazias = [...Array(5-score)].map((e,i) => <img key={i} src="/img/EstrelaVazia.png" alt="" width="30px"/>)
-    return (
-        <div className="estrelas">
-            {cheias}{vazias}
-        </div>
-    )
+    if(score && score>-1){
+        score = Math.floor(score);
+        const cheias = [...Array(score)].map((e,i) => <img key={i} src="/img/EstrelaCheia.png" alt="" width="30px"/>)
+        const vazias = [...Array(5-score)].map((e,i) => <img key={i} src="/img/EstrelaVazia.png" alt="" width="30px"/>)
+        return (
+            <div className="avaliacoes">
+                {cheias}{vazias}
+            </div>
+        )
+    }else{
+        const vazias = [...Array(5)].map((e,i) => <img key={i} className="estrelas-sem-avaliacoes" src="/img/EstrelaVazia.png" alt="" width="30px"/>)
+        return (
+            <div className="avaliacoes">
+                {vazias} Produto sem avaliações
+            </div>
+        )
+    }
+    
 }
 
 function Ingredientes ({ingredientes}){
@@ -26,6 +37,7 @@ function Ingredientes ({ingredientes}){
 }
 
 function ListaDeProdutos(lista){
+    const {id} = useParams();
     const ImagemComponent = ({ base64String }) => {
         return (
             <div>
@@ -34,8 +46,21 @@ function ListaDeProdutos(lista){
         );
     };
 
-    const handleRemoverProduto = () => {
-        //TODO
+    const handleRemoverProduto = (e, id_produto) => {
+        e.preventDefault();
+        console.log("id: "+id+" id_produto: "+ id_produto);
+        try{
+            const controller = new AbortController();
+            axios.delete(`http://localhost:3001/lista-favoritos/remover`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}, {
+                id_lista_favoritos: id,
+                id_produto: id_produto
+            }).catch(function (error) {
+                if (error.response) {
+                  controller.abort();
+                }})
+        }catch(error){
+            console.error(error);
+        }
     }
 
     if(lista){
@@ -44,13 +69,13 @@ function ListaDeProdutos(lista){
                 <li key={produto.Produto.id_produto} className="splitScreen">
                     <div className="leftPane">
                         <ImagemComponent base64String={Buffer.from(produto.Produto.imagem).toString('base64')} />
-                        <button type="button" className="botao-deletar p-1 btn btn-primary btn-sm rounded-circle" id="botao-deletar" onClick={handleRemoverProduto}><img className="imagem-deletar" src="/img/close.png" alt=""/></button>
+                        <button type="button" className="botao-deletar p-1 btn btn-primary btn-sm rounded-circle" id="botao-deletar" onClick={(e) => handleRemoverProduto(e, produto?.Produto.id_produto)}><img className="imagem-deletar" src="/img/close.png" alt=""/></button>
                     </div>
                     <div className="rightPane">
                         <h3 className="nome-marca"><Link to={`/produtos/${produto?.Produto.id_produto}`}>{produto?.Produto.nome}, {produto?.Produto.marca}</Link></h3>
                         <p>{produto.Produto.descricao}</p>
                         <Ingredientes ingredientes={produto?.Produto.ingredientes}/>
-                        <ScoreAverage score={SCORE} />
+                        <ScoreAverage score={produto?.Produto.nota} />
                     </div>
                 </li>
             </div>);

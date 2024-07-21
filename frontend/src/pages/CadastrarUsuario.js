@@ -7,7 +7,7 @@ export default function CadastrarUsuario (){
     const [nome_usuario, setNome_usuario] = useState();
     const [email, setEmail] = useState();
     const [senha, setSenha] = useState();
-    const [tipo_usuario, setTipo_usuario] = useState();
+    const [tipo_usuario, setTipo_usuario] = useState("C");
 
     const handleNomeChange = (e) => setNome(e.target.value);
     const handleUsuarioChange = (e) => setNome_usuario(e.target.value);
@@ -58,16 +58,6 @@ export default function CadastrarUsuario (){
             <input type="email" className="form-control rounded-pill" id="email" name="email" onChange={handleEmailChange}/>
             <label htmlFor="senha" className="form-label mt-4">Senha</label>
             <input type="password" className="form-control rounded-pill" id="senha" name="senha" autoComplete="off" onChange={handleSenhaChange}/>
-            <div className="flex-container">
-              <div className="flex-item">
-                <input type="radio" className="radio-btn" id="tipo_usuario_comum" name="tipo_usuario" value="C" onChange={handleTipoChange}/>
-                <label htmlFor="tipo_usuario_comum" className="label">Comum</label>
-              </div>
-              <div className="flex-item">
-                <input type="radio" className="radio-btn" id="tipo_usuario_admin" name="tipo_usuario" value="A" onChange={handleTipoChange}/>
-                <label htmlFor="tipo_usuario_admin" className="label" >Administrador</label>
-              </div>
-            </div>
             <div className="div-botao-publicar">
               <button type="submit" className="btn btn-primary rounded-pill botao-publicar">Cadastrar</button>
             </div>

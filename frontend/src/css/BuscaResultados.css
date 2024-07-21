@@ -1,0 +1,15 @@
+.texto {
+    font-style: italic;
+}
+
+.filtros-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.filtros {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    margin-bottom: 5px;
+}
