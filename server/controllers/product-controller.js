@@ -97,7 +97,7 @@ exports.deletarProduto = async (req, res) => {
   }
 };
 
-exports.buscarProdutos = async (req, res, next) => {
+exports.buscarProdutos = async (req, res) => {
   const { termo } = req.query;
 
   if (!termo) {
@@ -105,7 +105,7 @@ exports.buscarProdutos = async (req, res, next) => {
   }
 
   try {
-    req.resultado = Produto.findAll({
+    const produtos = await Produto.findAll({
       where: {
         [Op.or]: [
           { nome: { [Op.iLike]: `%${termo}%` } },
@@ -120,12 +120,29 @@ exports.buscarProdutos = async (req, res, next) => {
       },
     });
 
-    next();
+    if (produtos.length === 0) {
+      return res.status(404).json({ message: 'Nenhum produto encontrado.' });
+    }
+
+    const resultados = produtos.map(produto => ({
+      nome: produto.nome,
+      marca: produto.marca,
+      descricao: produto.descricao,
+      ingredientes: produto.ingredientes,
+      reviews: produto.Reviews.map(review => ({
+        nota_estrelas: review.nota_estrelas,
+        comentario: review.comentario,
+        tipo_pele: review.tipo_pele,
+        alergia: review.alergia,
+      })),
+    }));
+
+    res.status(200).json(resultados);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Erro ao buscar produtos.' });
-    }
-  };
+  }
+};
 
   exports.filtrarProdutos = async (req, res) => {
     const { marca, descricao, ingredientes } = req.query;
