@@ -125,10 +125,12 @@ exports.buscarProdutos = async (req, res) => {
     }
 
     const resultados = produtos.map(produto => ({
+      id: produto.id_produto,
       nome: produto.nome,
       marca: produto.marca,
       descricao: produto.descricao,
       ingredientes: produto.ingredientes,
+      imagem: produto.imagem ? produto.imagem.toString('base64') : null,
       reviews: produto.Reviews.map(review => ({
         nota_estrelas: review.nota_estrelas,
         comentario: review.comentario,
@@ -169,6 +171,25 @@ exports.buscarProdutos = async (req, res) => {
           attributes: ['nota_estrelas', 'comentario', 'tipo_pele', 'alergia']
         }
       });
+      
+      if (produtosFiltrados.length === 0) {
+        return res.status(404).json({ message: 'Nenhum produto encontrado.' });
+      }
+  
+      const resultados = produtosFiltrados.map(produto => ({
+        id: produto.id_produto,
+        nome: produto.nome,
+        marca: produto.marca,
+        descricao: produto.descricao,
+        ingredientes: produto.ingredientes,
+        imagem: produto.imagem ? produto.imagem.toString('base64') : null,
+        reviews: produto.Reviews.map(review => ({
+          nota_estrelas: review.nota_estrelas,
+          comentario: review.comentario,
+          tipo_pele: review.tipo_pele,
+          alergia: review.alergia
+        }))
+      }));
   
       res.status(200).json(produtosFiltrados);
     } catch (err) {
