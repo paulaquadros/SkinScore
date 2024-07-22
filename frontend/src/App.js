@@ -12,6 +12,7 @@ import VisualizarLista from './pages/VisualizarLista';
 import AvaliarProduto from './pages/AvaliarProduto';
 import BuscaResultados from './pages/BuscaResultados';
 import Usuario from './pages/Usuario';
+import VisualizarListaDeOutroUsuario from './pages/VisualizarListaDeOutroUsuario';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/avaliar/:id" Component={AvaliarProduto}/>
         <Route path="/search" Component={BuscaResultados}/>
         <Route path="/usuario/:id" Component={Usuario}/>
+        <Route path="/listas/usuario/:id_usuario/:id_lista" Component={VisualizarListaDeOutroUsuario}/>
       </Routes>
     </div>
   );

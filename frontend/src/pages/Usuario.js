@@ -14,6 +14,7 @@ const ImagemComponent = ({ base64String }) => {
 };
 
 function Lista ({lista}){
+    const {id} = useParams();
     const nome = lista.nome_lista;
     const [imageData, setImageData] = useState();
 
@@ -37,7 +38,7 @@ function Lista ({lista}){
         <div className="container">
            {imageData && <ImagemComponent base64String={Buffer.from(imageData).toString('base64')} />}
            {!imageData && <img src="/img/Produto.png" alt=""/>}
-            <button type="button" className="botao-acessar btn btn-primary rounded-pill"><Link to={`/listas/${lista.id_lista_favoritos}`} className="link-botao">{nome}</Link></button>
+            <button type="button" className="botao-acessar btn btn-primary rounded-pill"><Link to={`/listas/usuario/${id}/${lista.id_lista_favoritos}`} className="link-botao">{nome}</Link></button>
         </div>
     );
 }
