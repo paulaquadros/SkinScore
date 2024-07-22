@@ -39,7 +39,7 @@ function Produto ({produto}){
     useEffect(() => {
         const getImagem = async () => {
             try{
-                await axios.get(`http://localhost:3001/produtos/${produto?.id_produto}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
+                await axios.get(`http://localhost:3001/produtos/${produto?.id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
                     (response) => {
                         setImageData(response?.data.imagem.data);
                     }
@@ -54,8 +54,8 @@ function Produto ({produto}){
     
     return (
         <div className="container">
-            <div className="flex-item"><Link to={`/produtos/${produto.id_produto}`} className="link-produto">{imageData && <ImagemComponent base64String={Buffer.from(imageData).toString('base64')} />}</Link></div>
-            <div className="flex-item nome-produto"><Link to={`/produtos/${produto.id_produto}`} className="link-produto">{produto.nome}, {produto.marca}</Link></div>
+            <div className="flex-item"><Link to={`/produtos/${produto.id}`} className="link-produto">{imageData && <ImagemComponent base64String={Buffer.from(imageData).toString('base64')} />}</Link></div>
+            <div className="flex-item nome-produto"><Link to={`/produtos/${produto.id}`} className="link-produto">{produto.nome}, {produto.marca}</Link></div>
             <div className="flex-item estrelas-produto"><ScoreAverage score={produto.nota}/></div>
         </div>
     );
@@ -66,7 +66,7 @@ function ListaDeProdutos ({produtos}){
     if(produtos){
         produtos?.forEach((produto) => {
             linhas.push(
-                <Produto produto={produto} key={produto?.id_produto} />
+                <Produto produto={produto} key={produto?.id} />
             )
         });
     }

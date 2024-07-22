@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom";
 import '../css/MinhasListas.css';
-import { Modal } from "react-bootstrap";
 import { Buffer } from "buffer";
 
 
@@ -16,9 +15,6 @@ const ImagemComponent = ({ base64String }) => {
 
 function Lista ({lista}){
     const nome = lista.nome_lista;
-    const [privado, setPrivado] = useState(lista.privado)
-    const [modalShow, setModalShow] = useState(false);
-
     const [imageData, setImageData] = useState();
 
     useEffect(() => {
@@ -84,11 +80,11 @@ export default function Usuario () {
         const getListas = async () => {
             try{
                 const controller = new AbortController();
-                axios.get(`http://localhost:3001/favoritos/usuario/${id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
+                axios.get(`http://localhost:3001/lista-favoritos/favoritos/usuario/${id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
                     if (error.response) {
                       controller.abort();
                     }}).then(
-                    (response) => {setLista(response?.data); console.log(response?.data);}
+                    (response) => {setLista(response?.data);}
                 )
             }catch(error){
                 console.error(error);
@@ -101,8 +97,8 @@ export default function Usuario () {
     return (
         <div className="panel">
             <h2>Listas de {user?.nome}</h2>
-            {lista && lista.lenght>0 && <ListaDeListas listas={lista}/>}
-            {(!lista || lista.length<1) && <div className="texto">{user?.nome} não possui nenhuma lista pública</div>}
+            {(lista || lista?.lenght>0) && <ListaDeListas listas={lista}/>}
+            {(!lista || lista?.length<1) && <div className="texto">{user?.nome} não possui nenhuma lista pública</div>}
         </div>
     )
 }

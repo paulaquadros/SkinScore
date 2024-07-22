@@ -51,10 +51,8 @@ function ListaDeProdutos(lista){
         console.log("id: "+id+" id_produto: "+ id_produto);
         try{
             const controller = new AbortController();
-            axios.delete(`http://localhost:3001/lista-favoritos/remover`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}, {
-                id_lista_favoritos: id,
-                id_produto: id_produto
-            }).catch(function (error) {
+            axios.delete(`http://localhost:3001/lista-favoritos/remover/${id}/${id_produto}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }})
+            .catch(function (error) {
                 if (error.response) {
                   controller.abort();
                 }})

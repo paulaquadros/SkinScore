@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import '../css/VisualizarProduto.css';
-import { Button, Popover, OverlayTrigger } from 'react-bootstrap';
-import Rating from 'react-rating';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Buffer } from "buffer";
