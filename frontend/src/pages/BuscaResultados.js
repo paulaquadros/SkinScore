@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Buffer } from "buffer";
 import '../css/BuscaResultados.css';
 
-function ScoreAverage ({score, quantAvaliacoes}){
+function ScoreAverage ({score}){
     if(score && score>-1){
         score = Math.floor(score);
         const cheias = [...Array(score)].map((e,i) => <img key={i} src="/img/EstrelaCheia.png" alt="" width="30px"/>)
@@ -35,13 +35,15 @@ const ImagemComponent = ({ base64String }) => {
 
 function Produto ({produto}){
     const [imageData, setImageData] = useState();
-
+    const [nota, setNota] = useState();
+    
     useEffect(() => {
         const getImagem = async () => {
             try{
                 await axios.get(`http://localhost:3001/produtos/${produto?.id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
                     (response) => {
                         setImageData(response?.data.imagem.data);
+                        setNota(response?.data.nota);
                     }
                 );
                 
@@ -55,8 +57,8 @@ function Produto ({produto}){
     return (
         <div className="container">
             <div className="flex-item"><Link to={`/produtos/${produto.id}`} className="link-produto">{imageData && <ImagemComponent base64String={Buffer.from(imageData).toString('base64')} />}</Link></div>
-            <div className="flex-item nome-produto"><Link to={`/produtos/${produto.id}`} className="link-produto">{produto.nome}, {produto.marca}</Link></div>
-            <div className="flex-item estrelas-produto"><ScoreAverage score={produto.nota}/></div>
+            <div className="flex-item nome-produto"><Link to={`/produtos/${produto.id}`} className="li,nk-produto">{produto.nome}, {produto.marca}</Link></div>
+            <div className="flex-item estrelas-produto"><ScoreAverage score={nota}/></div>
         </div>
     );
 }

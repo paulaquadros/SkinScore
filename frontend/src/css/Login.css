@@ -22,3 +22,20 @@ form{
 .botao-publicar {
     width: 30%;
 }
+
+.texto-erro {
+    font-weight: bold;
+    color: red;
+}
+
+.texto-login-ok {
+    width: 60%;
+    align-self: center;
+    margin: auto;
+}
+
+.botao-login-ok {
+    width: 30%;
+    align-self: center;
+    margin: auto;
+}

@@ -5,7 +5,7 @@ import { Buffer } from "buffer";
 import '../css/VisualizarLista.css';
 import { Modal } from "react-bootstrap";
 
-function ScoreAverage ({score, quantAvaliacoes}){
+function ScoreAverage ({score}){
     if(score && score>-1){
         score = Math.floor(score);
         const cheias = [...Array(score)].map((e,i) => <img key={i} src="/img/EstrelaCheia.png" alt="" width="30px"/>)
@@ -36,19 +36,20 @@ function Ingredientes ({ingredientes}){
     )
 }
 
-function ListaDeProdutos(lista){
+const ImagemComponent = ({ base64String }) => {
+    return (
+        <div>
+            <img src={`data:image/jpeg;base64,${base64String}`} className='imagem' alt="Imagem" width="200px"/>
+        </div>
+    );
+};
+
+function Produto ({produto}){
     const {id} = useParams();
-    const ImagemComponent = ({ base64String }) => {
-        return (
-            <div>
-                <img src={`data:image/jpeg;base64,${base64String}`} className='imagem' alt="Imagem" width="200px"/>
-            </div>
-        );
-    };
+    const [nota, setNota] = useState();
 
     const handleRemoverProduto = (e, id_produto) => {
         e.preventDefault();
-        console.log("id: "+id+" id_produto: "+ id_produto);
         try{
             const controller = new AbortController();
             axios.delete(`http://localhost:3001/lista-favoritos/remover/${id}/${id_produto}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }})
@@ -61,27 +62,49 @@ function ListaDeProdutos(lista){
         }
     }
 
+    useEffect(() => {
+        const getNota = async () => {
+            try{
+                await axios.get(`http://localhost:3001/produtos/${produto?.Produto.id_produto}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
+                    (response) => {
+                        setNota(response?.data.nota);
+                    }
+                );
+                
+            }catch(error){
+                console.log(error);
+            }
+        }
+        getNota();
+    },[]);
+    
+    return (
+        <li className="splitScreen">
+            {console.log(produto)}
+            <div className="leftPane">
+                {produto.Produto.imagem && <ImagemComponent base64String={Buffer.from(produto.Produto.imagem).toString('base64')} />}
+                <button type="button" className="botao-deletar p-1 btn btn-primary btn-sm rounded-circle" id="botao-deletar" onClick={(e) => handleRemoverProduto(e, produto?.Produto.id_produto)}><img className="imagem-deletar" src="/img/close.png" alt=""/></button>
+            </div>
+            <div className="rightPane">
+                <h3 className="nome-marca"><Link to={`/produtos/${produto?.Produto.id_produto}`}>{produto?.Produto.nome}, {produto?.Produto.marca}</Link></h3>
+                <p>{produto.Produto.descricao}</p>
+                <Ingredientes ingredientes={produto?.Produto.ingredientes}/>
+                <ScoreAverage score={nota} />
+            </div>
+        </li>
+    );
+}
+
+function ListaDeProdutos(lista){
     if(lista){
         const listItems = lista?.lista?.map((produto) =>
-            <div>
-                <li key={produto.Produto.id_produto} className="splitScreen">
-                    <div className="leftPane">
-                        {produto.Produto.imagem && <ImagemComponent base64String={Buffer.from(produto.Produto.imagem).toString('base64')} />}
-                        <button type="button" className="botao-deletar p-1 btn btn-primary btn-sm rounded-circle" id="botao-deletar" onClick={(e) => handleRemoverProduto(e, produto?.Produto.id_produto)}><img className="imagem-deletar" src="/img/close.png" alt=""/></button>
-                    </div>
-                    <div className="rightPane">
-                        <h3 className="nome-marca"><Link to={`/produtos/${produto?.Produto.id_produto}`}>{produto?.Produto.nome}, {produto?.Produto.marca}</Link></h3>
-                        <p>{produto.Produto.descricao}</p>
-                        <Ingredientes ingredientes={produto?.Produto.ingredientes}/>
-                        <ScoreAverage score={produto?.Produto.nota} />
-                    </div>
-                </li>
-            </div>);
+            <Produto key={produto.Produto.id_produto} produto={produto}/>
+        );
 
     return (
-        <div className="panel">
+        <ul className="panel">
             {listItems}
-        </div>
+        </ul>
     )
     }
 }

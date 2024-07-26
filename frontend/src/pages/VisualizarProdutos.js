@@ -4,8 +4,7 @@ import { Link } from "react-router-dom";
 import '../css/VisualizarProdutos.css';
 import { Buffer } from "buffer";
 
-function ScoreAverage ({score, quantAvaliacoes}){
-    console.log("score: "+score+" quantAvaliacoes: "+quantAvaliacoes);
+function ScoreAverage ({score}){
     if(score && score>-1){
         score = Math.floor(score);
         const cheias = [...Array(score)].map((e,i) => <img key={i} src="/img/EstrelaCheia.png" alt="" width="30px"/>)
@@ -36,6 +35,7 @@ const ImagemComponent = ({ base64String }) => {
 
 function Produto ({produto}){
     const [imageData, setImageData] = useState();
+    console.log(produto);
 
     useEffect(() => {
         const getImagem = async () => {
@@ -107,5 +107,3 @@ export default function VisualizarProdutos() {
         </div>
     )
 }
-
-const SCORE = 3;

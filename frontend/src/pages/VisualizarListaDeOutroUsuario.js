@@ -35,31 +35,53 @@ function Ingredientes ({ingredientes}){
     )
 }
 
-function ListaDeProdutos({lista}){
-    console.log(lista);
-    const ImagemComponent = ({ base64String }) => {
-        return (
-            <div>
-                <img src={`data:image/jpeg;base64,${base64String}`} className='imagem' alt="Imagem" width="200px"/>
-            </div>
-        );
-    };
+const ImagemComponent = ({ base64String }) => {
+    return (
+        <div>
+            <img src={`data:image/jpeg;base64,${base64String}`} className='imagem' alt="Imagem" width="200px"/>
+        </div>
+    );
+};
 
+function Produto ({produto}){
+    const [nota, setNota] = useState();
+
+    useEffect(() => {
+        const getNota = async () => {
+            try{
+                await axios.get(`http://localhost:3001/produtos/${produto?.Produto.id_produto}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
+                    (response) => {
+                        setNota(response?.data.nota);
+                    }
+                );
+                
+            }catch(error){
+                console.log(error);
+            }
+        }
+        getNota();
+    },[]);
+    
+    return (
+        <li className="splitScreen">
+            <div className="leftPane">
+                {produto.Produto.imagem && <ImagemComponent base64String={Buffer.from(produto.Produto.imagem).toString('base64')} />}
+            </div>
+            <div className="rightPane">
+                <h3 className="nome-marca"><Link to={`/produtos/${produto?.Produto.id_produto}`}>{produto?.Produto.nome}, {produto?.Produto.marca}</Link></h3>
+                <p>{produto.Produto.descricao}</p>
+                <Ingredientes ingredientes={produto?.Produto.ingredientes}/>
+                <ScoreAverage score={nota} />
+            </div>
+        </li>
+    );
+}
+
+function ListaDeProdutos({lista}){
     if(lista){
         const listItems = lista?.map((produto) =>
-            <div>
-                <li key={produto.Produto.id_produto} className="splitScreen">
-                    <div className="leftPane">
-                        {produto.Produto.imagem && <ImagemComponent base64String={Buffer.from(produto.Produto.imagem).toString('base64')} />}
-                    </div>
-                    <div className="rightPane">
-                        <h3 className="nome-marca"><Link to={`/produtos/${produto?.Produto.id_produto}`}>{produto?.Produto.nome}, {produto?.Produto.marca}</Link></h3>
-                        <p>{produto.Produto.descricao}</p>
-                        <Ingredientes ingredientes={produto?.Produto.ingredientes}/>
-                        <ScoreAverage score={produto?.Produto.nota} />
-                    </div>
-                </li>
-            </div>);
+            <Produto key={produto.id_produto} produto={produto}/>
+        );
 
     return (
         <div className="panel">
@@ -81,7 +103,7 @@ export default function VisualizarListaDeOutroUsuario () {
                     if (error.response) {
                       controller.abort();
                     }}).then(
-                    (response) => {setLista(response?.data);console.log(response?.data)}
+                    (response) => {setLista(response?.data);}
                 )
             }catch(error){
                 console.error(error);

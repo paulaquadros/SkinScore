@@ -19,6 +19,24 @@
     align-content: flex-start;
   }
 
+  .nome-nova-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-weight: bold;
+  }
+
+  .radio-privado-texto{
+    font-weight: bold;
+  }
+
+  .radio-privado {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    max-width: 10%;
+  }
+
   .container img {
     position: relative;
     max-width: 350px;

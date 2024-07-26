@@ -3,7 +3,6 @@ import { Popover, OverlayTrigger } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import '../css/Header.css';
 import { useState } from "react";
-import axios from "axios";
 
 function BotaoLoginCadastrar () {
     return (
@@ -22,6 +21,7 @@ export default function AppHeader (){
     const handleLogout = (e) => {
         e.preventDefault();
         sessionStorage.removeItem("token");
+        navigate('/');
     }
     
     const popover = (

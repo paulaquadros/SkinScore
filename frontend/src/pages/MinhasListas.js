@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import '../css/MinhasListas.css';
 import { Modal } from "react-bootstrap";
 import { Buffer } from "buffer";
@@ -167,6 +167,7 @@ function EditarLista(props){
 function AdicionarLista(props){
     const [nome_lista, setNome_lista] = useState();
     const [privado, setPrivado] = useState(true);
+    const [showOk, setShowOk] = useState(false);
 
     const handleNomeListaChange = (e) => setNome_lista(e.target.value);
     const handlePrivadoChange = (e) => setPrivado(e.target.value);
@@ -194,43 +195,73 @@ function AdicionarLista(props){
                 console.log('Error', error.message);
               }
               console.log(error.config);
-            })
+            }).then(props.setModalShow(false)).then(setShowOk(true))
           }catch(error){
             console.log(error);
           }
         }
 
     return (
-        <Modal
+        <div>
+          <Modal
             {...props}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
+          >
+          <form onSubmit={handleCriarLista}>
+              <Modal.Header closeButton>
+                  <Modal.Title id="contained-modal-title-vcenter">
+                      Criar Nova Lista
+                  </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                  <div className="nome-nova-lista">
+                    <label htmlFor="nome-lista" className="form-label mt-4">Nome da Lista:</label>
+                    <input type="text" id="nome-lista" name="nome-lista" onChange={handleNomeListaChange}/>
+                  </div>
+                  <p className="form-label mt-4 radio-privado-texto">Lista Privada?</p>
+                  <div className="radio-privado">
+                    <input type="radio" className="flex-item" id="radio-privado-sim" name="radio-privado" value={true} onChange={handlePrivadoChange}/><label htmlFor="radio-privado-sim">Sim</label>
+                  </div>
+                  <div className="radio-privado">
+                    <input type="radio" className="flex-item" id="radio-privado-nao" name="radio-privado" value={false} onChange={handlePrivadoChange}/><label htmlFor="radio-privado-nao">Não</label>
+                  </div>
+              </Modal.Body>
+              <Modal.Footer>
+                  <button className="btn btn-primary rounded-pill botao-publicar" type="submit">Criar Lista</button>
+              </Modal.Footer>
+            </form>
+        </Modal>
+        <Modal
+            show={showOk}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            onHide={() => {setShowOk(false); window.location.reload();}}
         >
-        <form onSubmit={handleCriarLista}>
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Criar Nova Lista
                 </Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-                <label htmlFor="nome-lista" className="form-label mt-4">Nome da Lista</label>
-                <input type="text" id="nome-lista" name="nome-lista" onChange={handleNomeListaChange}/>
-                <p>Lista Privada?</p>
-                <input type="radio" id="radio-privado-sim" name="radio-privado" value={true} onChange={handlePrivadoChange}/><label htmlFor="radio-privado-sim">Sim</label>
-                <input type="radio" id="radio-privado-nao" name="radio-privado" value={false} onChange={handlePrivadoChange}/><label htmlFor="radio-privado-nao">Não</label>
+            <Modal.Body>r
+                <h2 className="texto-login-ok">Lista criada com sucesso</h2>
             </Modal.Body>
             <Modal.Footer>
-                <button className="btn btn-primary rounded-pill botao-publicar" type="submit">Criar Lista</button>
+                <div className="confirmar">
+                    <button className="btn btn-primary rounded-pill botao-login-ok" type="button" onClick={() => {setShowOk(false); window.location.reload();}}>Ok</button>
+                </div>
             </Modal.Footer>
-          </form>
-      </Modal>
+        </Modal>
+      </div>
     )
 }
 
 export default function MinhasListas () {
     const [lista, setLista] = useState();
     const [modalShow, setModalShow] = useState(false);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getListas = async () => {
@@ -255,7 +286,8 @@ export default function MinhasListas () {
             <button type="button" className="btn btn-primary rounded-pill botao-criar" onClick={() => setModalShow(true)}>Criar Lista</button>
             <AdicionarLista
                 show={modalShow}
-                onHide={() => window.location.reload().then(setModalShow(false))}
+                setModalShow={setModalShow}
+                onHide={() => {setModalShow(false); navigate('/listas')}}
             />
             {(lista || lista?.lenght>0) && <ListaDeListas listas={lista}/>}
             {(!lista || lista?.length<1) && <div className="texto">Você ainda não criou nenhuma lista</div>}
