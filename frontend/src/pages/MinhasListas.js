@@ -26,7 +26,7 @@ function Lista ({lista}){
     useEffect(() => {
         const getImagem = async () => {
             try{
-                await axios.get(`http://localhost:3001/produtos/${lista?.primeiro_produto.id_produto}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
+                await axios.get(`http://3.145.180.184/produtos/${lista?.primeiro_produto.id_produto}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
                     (response) => {
                         setImageData(response?.data.imagem.data);
                     }
@@ -44,7 +44,7 @@ function Lista ({lista}){
         lista.privado = !lista.privado;
         setPrivado(lista.privado);
         try{
-            axios.put(`http://localhost:3001/lista-favoritos/${lista.id_lista_favoritos}`,{
+            axios.put(`http://3.145.180.184/lista-favoritos/${lista.id_lista_favoritos}`,{
               nome_lista: nome,
               privado: lista.privado,
               id_lista_favoritos: lista.id_lista_favoritos
@@ -112,7 +112,7 @@ function EditarLista(props){
     const handleEditarLista = (e) => {
         e.preventDefault();
         try{
-            axios.put(`http://localhost:3001/lista-favoritos/${props.lista.id_lista_favoritos}`,{
+            axios.put(`http://3.145.180.184/lista-favoritos/${props.lista.id_lista_favoritos}`,{
               nome_lista: nome_lista,
               privado: props.lista.privado,
               id_lista_favoritos: props.lista.id_lista_favoritos
@@ -175,7 +175,7 @@ function AdicionarLista(props){
     const handleCriarLista = (e) => {
         e.preventDefault();
         try{
-            axios.post('http://localhost:3001/lista-favoritos/',{
+            axios.post('http://3.145.180.184/lista-favoritos/',{
               nome_lista: nome_lista,
               privado: privado
             }, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
@@ -267,7 +267,7 @@ export default function MinhasListas () {
         const getListas = async () => {
             try{
                 const controller = new AbortController();
-                axios.get(`http://localhost:3001/lista-favoritos`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
+                axios.get(`http://3.145.180.184/lista-favoritos`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
                     if (error.response) {
                       controller.abort();
                     }}).then(

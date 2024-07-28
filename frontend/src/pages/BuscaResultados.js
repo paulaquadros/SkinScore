@@ -40,7 +40,7 @@ function Produto ({produto}){
     useEffect(() => {
         const getImagem = async () => {
             try{
-                await axios.get(`http://localhost:3001/produtos/${produto?.id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
+                await axios.get(`http://3.145.180.184/produtos/${produto?.id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
                     (response) => {
                         setImageData(response?.data.imagem.data);
                         setNota(response?.data.nota);
@@ -115,7 +115,7 @@ export default function BuscaResultados() {
         setBusca(location.state.busca);
         const getProdutos = async () => {
             try{
-                await axios.get(`http://localhost:3001/produtos/search`, {params: {termo: busca}}, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }})
+                await axios.get(`http://3.145.180.184/produtos/search`, {params: {termo: busca}}, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }})
                 .then((response) => {setProdutos(response.data); setProdutosFiltrado(response.data);})
             }catch(error){
                 console.log(error);
@@ -124,7 +124,7 @@ export default function BuscaResultados() {
     
         const getUsuario = async () => {
                 try{
-                    await axios.get(`http://localhost:3001/usuarios/search`, {params: {nome_usuario: busca}}, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }})
+                    await axios.get(`http://3.145.180.184/usuarios/search`, {params: {nome_usuario: busca}}, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }})
                     .then((response) => setUsuario(response.data))
                 }catch(error){
                     console.log(error);

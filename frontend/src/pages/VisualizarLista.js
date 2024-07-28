@@ -52,7 +52,7 @@ function Produto ({produto}){
         e.preventDefault();
         try{
             const controller = new AbortController();
-            axios.delete(`http://localhost:3001/lista-favoritos/remover/${id}/${id_produto}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }})
+            axios.delete(`http://3.145.180.184/lista-favoritos/remover/${id}/${id_produto}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }})
             .catch(function (error) {
                 if (error.response) {
                   controller.abort();
@@ -65,7 +65,7 @@ function Produto ({produto}){
     useEffect(() => {
         const getNota = async () => {
             try{
-                await axios.get(`http://localhost:3001/produtos/${produto?.Produto.id_produto}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
+                await axios.get(`http://3.145.180.184/produtos/${produto?.Produto.id_produto}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
                     (response) => {
                         setNota(response?.data.nota);
                     }
@@ -120,7 +120,7 @@ export default function VisualizarLista () {
         const getLista = async () => {
             try{
                 const controller = new AbortController();
-                axios.get(`http://localhost:3001/lista-favoritos/${id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
+                axios.get(`http://3.145.180.184/lista-favoritos/${id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
                     if (error.response) {
                       controller.abort();
                     }}).then(
@@ -136,7 +136,7 @@ export default function VisualizarLista () {
     const handleDeletarLista = (e) => {
         e.preventDefault();
         try{
-            axios.delete(`http://localhost:3001/lista-favoritos/${id}`, {
+            axios.delete(`http://3.145.180.184/lista-favoritos/${id}`, {
               headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
               if (error.response) {
                 // The request was made and the server responded with a status code
@@ -164,7 +164,7 @@ export default function VisualizarLista () {
         const getLista = async () => {
             try{
                 const controller = new AbortController();
-                axios.get(`http://localhost:3001/lista-favoritos/${id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
+                axios.get(`http://3.145.180.184/lista-favoritos/${id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
                     if (error.response) {
                       controller.abort();
                     }}).then(

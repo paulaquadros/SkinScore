@@ -39,7 +39,7 @@ export default function CadastrarProduto () {
         formData.append('ingredientes', ingredientes);
 
         try {
-            const response = await fetch('http://localhost:3001/produtos', {
+            const response = await fetch('http://3.145.180.184/produtos', {
               method: 'POST',
               body: formData,
               headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }
