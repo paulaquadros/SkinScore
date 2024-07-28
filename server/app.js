@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cors())
 
 setupSwagger(app);
-console.log(`Documentação do SkinScore no Swagger: http://3.145.180.184/api-docs`);
+console.log(`Documentação do SkinScore no Swagger: http://3.145.180.184:3001/api-docs`);
 
 app.use('/', indexRoutes);
 app.use('/produtos', productRoutes);

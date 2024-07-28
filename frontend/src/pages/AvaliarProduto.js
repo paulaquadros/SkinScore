@@ -52,7 +52,7 @@ function AdicionarLista(props){
     const adicionarParaLista = async () => {
         try{
             const controller = new AbortController();
-            axios.post(`http://3.145.180.184/lista-favoritos/adicionar`,{
+            axios.post(`http://3.145.180.184:3001/lista-favoritos/adicionar`,{
                 id_lista_favoritos: id_lista,
                 id_produto: id
             }, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
@@ -68,7 +68,7 @@ function AdicionarLista(props){
         const getListas = async () => {
             try{
                 const controller = new AbortController();
-                axios.get(`http://3.145.180.184/lista-favoritos`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
+                axios.get(`http://3.145.180.184:3001/lista-favoritos`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
                     if (error.response) {
                       controller.abort();
                     }}).then(
@@ -143,7 +143,7 @@ function AdicionarReview (){
     const handleSubmit = async (e) => {
         e.preventDefault();
         try{
-            axios.post('http://3.145.180.184/reviews',{
+            axios.post('http://3.145.180.184:3001/reviews',{
                 id_produto: id,
                 nota_estrelas: rating,
                 comentario: comentario,
@@ -241,7 +241,7 @@ export default function AvaliarProduto () {
     useEffect(() => {
         const getData = async () => {
             try{
-                await axios.get(`http://3.145.180.184/produtos/${id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
+                await axios.get(`http://3.145.180.184:3001/produtos/${id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
                     (response) => {
                         setProduto(response?.data);
                         setImageData(response?.data.imagem.data);

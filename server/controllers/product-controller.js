@@ -38,7 +38,7 @@ exports.listarUmProduto = async (req, res) => {
     }
 
     try {
-      const response = await axios.get(`http://3.145.180.184/reviews/produto/${id}`); // Não façam isso no seu trabalho
+      const response = await axios.get(`http://3.145.180.184:3001/reviews/produto/${id}`); // Não façam isso no seu trabalho
       const reviews = response.data;
 
       const totalNotas = reviews.reduce((acc, review) => acc + review.nota_estrelas, 0);

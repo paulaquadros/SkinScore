@@ -21,7 +21,7 @@ function Lista ({lista}){
     useEffect(() => {
         const getImagem = async () => {
             try{
-                await axios.get(`http://3.145.180.184/produtos/${lista?.primeiro_produto.id_produto}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
+                await axios.get(`http://3.145.180.184:3001/produtos/${lista?.primeiro_produto.id_produto}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
                     (response) => {
                         setImageData(response?.data.imagem.data);
                     }
@@ -68,7 +68,7 @@ export default function Usuario () {
       const getUsuario = async () => {
         try{
             const controller = new AbortController();
-            axios.get(`http://3.145.180.184/usuarios/${id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
+            axios.get(`http://3.145.180.184:3001/usuarios/${id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
                 if (error.response) {
                   controller.abort();
                 }}).then(
@@ -81,7 +81,7 @@ export default function Usuario () {
         const getListas = async () => {
             try{
                 const controller = new AbortController();
-                axios.get(`http://3.145.180.184/lista-favoritos/favoritos/usuario/${id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
+                axios.get(`http://3.145.180.184:3001/lista-favoritos/favoritos/usuario/${id}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
                     if (error.response) {
                       controller.abort();
                     }}).then(

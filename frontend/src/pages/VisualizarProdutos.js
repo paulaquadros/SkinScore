@@ -40,7 +40,7 @@ function Produto ({produto}){
     useEffect(() => {
         const getImagem = async () => {
             try{
-                await axios.get(`http://3.145.180.184/produtos/${produto?.id_produto}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
+                await axios.get(`http://3.145.180.184:3001/produtos/${produto?.id_produto}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
                     (response) => {
                         setImageData(response?.data.imagem.data);
                     }
@@ -88,7 +88,7 @@ export default function VisualizarProdutos() {
         const getProdutos = async () => {
             try{
                 const controller = new AbortController();
-                axios.get(`http://3.145.180.184/produtos`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
+                axios.get(`http://3.145.180.184:3001/produtos`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
                     if (error.response) {
                       controller.abort();
                     }}).then(

@@ -49,7 +49,7 @@ function Produto ({produto}){
     useEffect(() => {
         const getNota = async () => {
             try{
-                await axios.get(`http://3.145.180.184/produtos/${produto?.Produto.id_produto}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
+                await axios.get(`http://3.145.180.184:3001/produtos/${produto?.Produto.id_produto}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).then(
                     (response) => {
                         setNota(response?.data.nota);
                     }
@@ -99,7 +99,7 @@ export default function VisualizarListaDeOutroUsuario () {
         const getLista = async () => {
             try{
                 const controller = new AbortController();
-                axios.get(`http://3.145.180.184/lista-favoritos/favoritos/usuario/${id_usuario}/lista/${id_lista}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
+                axios.get(`http://3.145.180.184:3001/lista-favoritos/favoritos/usuario/${id_usuario}/lista/${id_lista}`, {headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` }}).catch(function (error) {
                     if (error.response) {
                       controller.abort();
                     }}).then(

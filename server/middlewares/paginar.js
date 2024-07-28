@@ -19,7 +19,7 @@ const paginar = (modelo) => async (req, res, next) => {
 
       const produtosComNota = await Promise.all(produtos.map(async (produto) => {
         try {
-          const response = await axios.get(`http://3.145.180.184/reviews/produto/${produto.id_produto}`); // Gambiarra braba
+          const response = await axios.get(`http://3.145.180.184:3001/reviews/produto/${produto.id_produto}`); // Gambiarra braba
           const reviews = response.data;
 
           const totalNotas = reviews.reduce((acc, review) => acc + review.nota_estrelas, 0);
