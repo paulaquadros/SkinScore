@@ -1,0 +1,10 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "1337",
+    "database": "skinscore",
+    "host": "postgres",
+    "dialect": "postgres",
+    "port": 5432
+  }
+}

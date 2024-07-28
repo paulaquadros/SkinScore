@@ -1,7 +1,5 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../db');
-const Usuario = require('./Usuario');
-const ItemLista = require('./ItemLista');
 
 const ListaFavoritos = sequelize.define('ListaFavoritos', {
   id_lista_favoritos: {
@@ -12,7 +10,7 @@ const ListaFavoritos = sequelize.define('ListaFavoritos', {
   id_usuario: {
     type: DataTypes.INTEGER,
     references: {
-      model: Usuario,
+      model: 'usuario',  // Nome da tabela referenciada
       key: 'id_usuario'
     }
   },
@@ -25,11 +23,8 @@ const ListaFavoritos = sequelize.define('ListaFavoritos', {
     defaultValue: true
   }
 }, {
-    tableName: 'lista_favoritos',
-    timestamps: false
+  tableName: 'lista_favoritos',
+  timestamps: false
 });
-
-ListaFavoritos.hasMany(ItemLista, { foreignKey: 'id_lista_favoritos' });
-ItemLista.belongsTo(ListaFavoritos, { foreignKey: 'id_lista_favoritos' });
 
 module.exports = ListaFavoritos;

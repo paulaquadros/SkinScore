@@ -26,7 +26,7 @@ app.use('/usuarios', userRoutes);
 app.use('/auth', authRoutes);
 app.use('/lista-favoritos', listaFavoritosRoutes);
 
-sequelize.sync().then(() => {
+sequelize.sync({ force: true }).then(() => {
   app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
   });

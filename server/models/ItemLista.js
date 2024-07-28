@@ -1,7 +1,5 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../db');
-const ListaFavoritos = require('./ListaFavoritos');
-const Produto = require('./Produto');
 
 const ItemLista = sequelize.define('ItemLista', {
   id_item_lista: {
@@ -12,23 +10,20 @@ const ItemLista = sequelize.define('ItemLista', {
   id_lista_favoritos: {
     type: DataTypes.INTEGER,
     references: {
-      model: ListaFavoritos,
+      model: 'lista_favoritos',  // Nome da tabela referenciada
       key: 'id_lista_favoritos'
     }
   },
   id_produto: {
     type: DataTypes.INTEGER,
     references: {
-      model: Produto,
+      model: 'produto',  // Nome da tabela referenciada
       key: 'id_produto'
     }
   }
 }, {
-    tableName: 'item_lista',
-    timestamps: false
+  tableName: 'item_lista',
+  timestamps: false
 });
-
-Produto.hasMany(ItemLista, { foreignKey: 'id_produto' });
-ItemLista.belongsTo(Produto, { foreignKey: 'id_produto' });
 
 module.exports = ItemLista;
