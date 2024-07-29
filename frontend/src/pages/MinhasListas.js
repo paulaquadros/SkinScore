@@ -16,7 +16,6 @@ const ImagemComponent = ({ base64String }) => {
 
 function Lista ({lista}){
     const imagem_editar = "/img/edit.png";
-    const imagem_compartilhar = "/img/share.png";
     const nome = lista.nome_lista;
     const [privado, setPrivado] = useState(lista.privado)
     const [modalShow, setModalShow] = useState(false);
@@ -83,7 +82,6 @@ function Lista ({lista}){
                 onHide={() => window.location.reload().then(setModalShow(false))}
             />
             <button type="button" className="botao-editar btn btn-primary rounded-circle" onClick={handlePrivadoChange}>{privado ? <img className="imagem-editar" src="/img/privado_on.png" alt=""/> : <img className="imagem-editar" src="/img/privado_off.png" alt=""/>}</button>
-            <button type="button" className="botao-editar btn btn-primary rounded-circle"><img className="imagem-compartilhar" src={imagem_compartilhar} alt=""/></button>
         </div>
     );
 }
