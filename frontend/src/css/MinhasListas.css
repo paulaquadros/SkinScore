@@ -13,6 +13,13 @@
     align-items:center;
   }
 
+  .container-botoes {
+    display: flex;
+    flex-flow: row wrap;
+    align-items:center;
+    margin:auto;
+  }
+
   .ListaNome {
     display: flex;
     flex-flow: row wrap;

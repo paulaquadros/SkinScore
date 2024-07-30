@@ -74,14 +74,16 @@ function Lista ({lista}){
         <div className="container">
            {imageData && <ImagemComponent base64String={Buffer.from(imageData).toString('base64')} />}
            {!imageData && <img src="/img/Produto.png" alt=""/>}
-            <button type="button" className="botao-acessar btn btn-primary rounded-pill"><Link to={`./${lista.id_lista_favoritos}`} className="link-botao">{nome}</Link></button>
-            <button type="button" className="botao-editar btn btn-primary rounded-circle" onClick={() => setModalShow(true)}><img className="imagem-editar" src={imagem_editar} alt=""/></button>
-            <EditarLista
-                show={modalShow}
-                lista={lista}
-                onHide={() => window.location.reload().then(setModalShow(false))}
-            />
-            <button type="button" className="botao-editar btn btn-primary rounded-circle" onClick={handlePrivadoChange}>{privado ? <img className="imagem-editar" src="/img/privado_on.png" alt=""/> : <img className="imagem-editar" src="/img/privado_off.png" alt=""/>}</button>
+            <div className="container-botoes">
+              <button type="button" className="botao-acessar btn btn-primary rounded-pill"><Link to={`./${lista.id_lista_favoritos}`} className="link-botao">{nome}</Link></button>
+              <button type="button" className="botao-editar btn btn-primary rounded-circle" onClick={() => setModalShow(true)}><img className="imagem-editar" src={imagem_editar} alt=""/></button>
+              <EditarLista
+                  show={modalShow}
+                  lista={lista}
+                  onHide={() => window.location.reload().then(setModalShow(false))}
+              />
+              <button type="button" className="botao-editar btn btn-primary rounded-circle" onClick={handlePrivadoChange}>{privado ? <img className="imagem-editar" src="/img/privado_on.png" alt=""/> : <img className="imagem-editar" src="/img/privado_off.png" alt=""/>}</button>
+            </div>
         </div>
     );
 }
@@ -242,7 +244,7 @@ function AdicionarLista(props){
                 <Modal.Title id="contained-modal-title-vcenter">
                 </Modal.Title>
             </Modal.Header>
-            <Modal.Body>r
+            <Modal.Body>
                 <h2 className="texto-login-ok">Lista criada com sucesso</h2>
             </Modal.Body>
             <Modal.Footer>

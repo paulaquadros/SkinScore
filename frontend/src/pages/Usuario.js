@@ -36,9 +36,11 @@ function Lista ({lista}){
 
     return (
         <div className="container">
-           {imageData && <ImagemComponent base64String={Buffer.from(imageData).toString('base64')} />}
-           {!imageData && <img src="/img/Produto.png" alt=""/>}
-            <button type="button" className="botao-acessar btn btn-primary rounded-pill"><Link to={`/listas/usuario/${id}/${lista.id_lista_favoritos}`} className="link-botao">{nome}</Link></button>
+            {imageData && <ImagemComponent base64String={Buffer.from(imageData).toString('base64')} />}
+            {!imageData && <img src="/img/Produto.png" alt=""/>}
+            <div className="container-botoes">
+                <button type="button" className="botao-acessar btn btn-primary rounded-pill"><Link to={`/listas/usuario/${id}/${lista.id_lista_favoritos}`} className="link-botao">{nome}</Link></button>
+            </div>
         </div>
     );
 }
